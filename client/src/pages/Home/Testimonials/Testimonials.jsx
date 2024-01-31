@@ -12,7 +12,7 @@ import "@smastrom/react-rating/style.css";
 const Testimonials = () => {
   const [reviews, setReviews] = useState([]);
   useEffect(() => {
-    fetch("reviews.json")
+    fetch("http://localhost:5000/reviews")
       .then((res) => res.json())
       .then((data) => {
         setReviews(data);
@@ -48,11 +48,15 @@ const Testimonials = () => {
       >
         {reviews.map((review) => (
           <SwiperSlide key={review._id}>
-           <div className="flex flex-col items-center bg-blue-950 text-white p-5 space-x-5 rounded-2xl shadow-2xl">
-           <Rating style={{ maxWidth: 180 }} value={review.rating} readOnly />
-            <p >{review.details}</p>
-            <p className="text-3xl font-extrabold">{review.name}</p>
-           </div>
+            <div className="flex flex-col items-center bg-blue-950 text-white p-5 space-x-5 rounded-2xl shadow-2xl">
+              <Rating
+                style={{ maxWidth: 180 }}
+                value={review.rating}
+                readOnly
+              />
+              <p>{review.details}</p>
+              <p className="text-3xl font-extrabold">{review.name}</p>
+            </div>
           </SwiperSlide>
         ))}
       </Swiper>
