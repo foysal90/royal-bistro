@@ -8,11 +8,12 @@ const Main = () => {
     const location = useLocation()
     console.log(location)
     const isLoggedIn = location.pathname.includes('login')
+    const isRegistered = location.pathname.includes('register');
     return (
         <div>
-            {isLoggedIn || <Navbar/>}
+            {isLoggedIn || isRegistered || <Navbar/>}
             <Outlet/>
-            {isLoggedIn || <Footer/>}
+            {isLoggedIn || isRegistered || <Footer/>}
         </div>
     );
 };
