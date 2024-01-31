@@ -38,6 +38,11 @@ const run= async() => {
         
         res.send(menu)
     })
+
+    app.get('/reviews', async(req, res) => {
+      const review = await reviews.find().toArray()
+      res.send(review)
+    })
     
 
     await client.db("admin").command({ ping: 1 });
