@@ -3,12 +3,15 @@ import Main from "../Layout/Main/Main";
 import Home from "../pages/Home/Home/Home";
 import Menu from "../pages/Menu/Menu/Menu";
 import OrderFood from "../pages/Order/OrderFood/OrderFood";
+import Login from "../pages/Login/Login";
+import ErrorElement from "../components/ErrorElement/ErrorElement";
 
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
+    errorElement: <ErrorElement/>,
     children: [
       {
         path: "/",
@@ -18,10 +21,10 @@ export const router = createBrowserRouter([
         path: "/menu",
         element: <Menu />,
       },
-      // {
-      //   path: "/order",
-      //   element: <OrderFood />,
-      // },
+      {
+        path: "/login",
+        element: <Login/>
+      },
       {
         path: "/order/:category",
         element: <OrderFood />,

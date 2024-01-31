@@ -1,7 +1,8 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from '../../../assets/tastehome.png'
 //import Mode from "../../../Layout/DarkMode/Mode";
-import Theme from "../Theme/Theme";
+//import Theme from "../Theme/Theme";
+import Mode from "../../../Layout/DarkMode/Mode";
 
 const Navbar = () => {
   const navItems = (
@@ -72,7 +73,8 @@ const Navbar = () => {
       {/* <Search/> */}
 
       <div className="navbar-end">
-        <Theme/>
+        {/* <Theme/> */}
+        <Mode/>
       </div>
     </div>
   );

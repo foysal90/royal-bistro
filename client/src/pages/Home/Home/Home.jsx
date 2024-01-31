@@ -9,8 +9,8 @@ const Home = () => {
   return (
     <div>
       <Helmet>
-        {" "}
-        <title>TOH | Home</title>{" "}
+        
+        <title>TOH | Home</title>
       </Helmet>
 
       <Banner />
