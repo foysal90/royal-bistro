@@ -1,5 +1,5 @@
 import { Link, NavLink } from "react-router-dom";
-import logo from '../../../assets/tastehome.png'
+import logo from "../../../assets/tastehome.png";
 //import Mode from "../../../Layout/DarkMode/Mode";
 //import Theme from "../Theme/Theme";
 import Mode from "../../../Layout/DarkMode/Mode";
@@ -8,12 +8,10 @@ import { AuthContext } from "../../../Provider/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 
 const Navbar = () => {
-  const {user, logOut} = useContext(AuthContext)
+  const { user, logOut } = useContext(AuthContext);
 
-  
   const handleLoggedOut = () => {
-    logOut()
-    .then(()=> {
+    logOut().then(() => {
       Swal.fire({
         title: "User logged out successfully",
         showClass: {
@@ -21,18 +19,18 @@ const Navbar = () => {
             animate__animated
             animate__fadeInUp
             animate__faster
-          `
+          `,
         },
         hideClass: {
           popup: `
             animate__animated
             animate__fadeOutDown
             animate__faster
-          `
-        }
+          `,
+        },
       });
-    })
-  }
+    });
+  };
   const navItems = (
     <>
       <li>
@@ -43,35 +41,62 @@ const Navbar = () => {
         <NavLink to="/about">About</NavLink>
       </li>
       <li>
-      <NavLink to="/contactus">Contact us</NavLink>
+        <NavLink to="/contactus">Contact us</NavLink>
       </li>
       <li>
-        <Link to='/menu'>OUR MENU</Link>
+        <Link to="/menu">OUR MENU</Link>
       </li>
       <li>
-        <Link to='/order/salad'>order Food</Link>
+        <Link to="/order/salad">order Food</Link>
       </li>
       <li>
         <NavLink to="/contactus">Dashboard</NavLink>
       </li>
 
       <li>
-        {
-          user ? <div>
-             <p>Welcome, {user.displayName}</p>
-             <img className="w-8 h-8" src={user.photoURL} alt="loading" />
-          <button onClick={handleLoggedOut}>Logout</button>
-         
+        {user ? (
+          <div className="-mt-3">
+            <p>Welcome, {user.displayName}</p>
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn  btn-circle avatar"
+              >
+                <div className="w-10 rounded-full">
+                  <img className="w-8 h-8" src={user.photoURL} alt="loading" />
+                </div>
+              </div>
+              <ul
+                tabIndex={0}
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-blue-950 text-white rounded-box w-52"
+              >
+                <li>
+                  <Link to='/profile' className="justify-between">
+                    {
+                      user && <span>Profile</span>
+                    }
+                   
+                  </Link>
+                </li>
+                <li>
+                <p><Mode /> </p>
+                </li>
+                <li>
+                  <button onClick={handleLoggedOut}>Logout</button>
+                </li>
+              </ul>
+            </div>
           </div>
-          :
+        ) : (
           <NavLink to="/login">Login</NavLink>
-        }
+        )}
       </li>
     </>
   );
 
   return (
-    <div className="navbar fixed z-10 opacity-70 max-w-screen-xl bg-black h-20 my-5 text-white ">
+    <div className="navbar fixed -top-5 z-10 md:opacity-70 sm:opacity-80 max-w-screen-xl bg-black h-20 my-5 text-white ">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -92,26 +117,24 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
+            className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-blue-500 rounded-box w-52"
           >
             {navItems}
           </ul>
         </div>
         <Link to="/">
-            
-           <img className="w-40 h-28 " src={logo} alt="TASTE-OF-HOME" /> 
+          <img className="w-40 h-28 " src={logo} alt="TASTE-OF-HOME" />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
       </div>
-      
 
       {/* <Search/> */}
 
       <div className="navbar-end">
         {/* <Theme/> */}
-        <Mode/>
+        {/* <Mode /> */}
       </div>
     </div>
   );

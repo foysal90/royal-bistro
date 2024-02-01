@@ -7,6 +7,7 @@ import Login from "../pages/Login/Login";
 import ErrorElement from "../components/ErrorElement/ErrorElement";
 import Register from "../pages/Register/Register";
 import ProtectedRoutes from "./ProtectedRoutes";
+import Profile from "../pages/Shared/Profile/Profile";
 
 
 export const router = createBrowserRouter([
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register/>
+      },
+      {
+        path: "/profile",
+        element: <ProtectedRoutes><Profile/></ProtectedRoutes>
       },
       {
         path: "/order/:category",

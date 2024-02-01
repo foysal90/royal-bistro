@@ -7,7 +7,7 @@ import Navbar from '../../pages/Shared/Navbar/Navbar';
 const Main = () => {
     const location = useLocation()
     console.log(location)
-    const isLoggedIn = location.pathname.includes('login')  || location.pathname.includes('register')
+    const isLoggedIn = location.pathname.includes('login')  || location.pathname.includes('register') || location.pathname.includes('profile')
     
     return (
         <div>
