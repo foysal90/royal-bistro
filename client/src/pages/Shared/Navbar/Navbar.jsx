@@ -8,9 +8,11 @@ import { AuthContext } from "../../../Provider/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import { FcBusinessman, FcExport } from "react-icons/fc";
 import { FaCartPlus } from "react-icons/fa";
+import useCart from "../../../hooks/useCart";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
+  const [cart] = useCart()
 
   const handleLoggedOut = () => {
     logOut().then(() => {
@@ -57,7 +59,7 @@ const Navbar = () => {
       <li>
         <Link to='/cart' className="">
         <FaCartPlus className="w-6 h-6" />
-          <div className="badge badge-secondary">0</div>
+          <div className="badge badge-secondary">{cart?.length || 0}</div>
         </Link>
       </li>
 
