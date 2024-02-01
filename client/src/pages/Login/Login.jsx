@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom';
-import gif from '../../assets/others/authentication.gif'
-import './Login.css'
+import gif from '../../assets/others/authentication-unscreen.gif'
+import cover from '../../assets/others/authentication.gif'
+
+ import './Login.css'
 import { loadCaptchaEnginge, LoadCanvasTemplate, LoadCanvasTemplateNoReload, validateCaptcha } from 'react-simple-captcha';
 
 import { useEffect, useRef, useState } from 'react';
@@ -42,15 +44,17 @@ const captchaRef = useRef(null)
     console.log(user)
   }
     return (
-        <div className="hero min-h-screen bg-white text-indigo-500">
+      <div className='container'>
+        <div className=" hero  min-h-screen bg-white text-indigo-500 login-bg " id=''>
         <div className="hero-content flex-col lg:flex-row">
-          <div className="text-center lg:text-right">
+          {/* <div className="text-center lg:text-right h-full w-full">
             
-            <img src={gif} alt="" />
-          </div>
-          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100" id='login'>
-          <div className="text-center my-5">
-             <h1 className="text-5xl font-bold">Login now!</h1>
+            <img src={cover} alt="" className='opacity-55' />
+          </div> */}
+          <div className="card shrink-0 w-full md:max-w-md md:mx-20   shadow-2xl bg-base-100  " id='login'>
+          <div className="text-center ">
+             <h1 className="text-3xl font-bold">Login now!</h1>
+             <img className='h-40 w-48 mx-auto' src={gif} alt=""  />
          </div>
             <form onSubmit={handleLogin} className="card-body">
               <div className="form-control">
@@ -86,6 +90,7 @@ const captchaRef = useRef(null)
           </div>
          
         </div>
+      </div>
       </div>
     )
 };

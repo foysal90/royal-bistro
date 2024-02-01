@@ -2,6 +2,11 @@ import { Link } from 'react-router-dom';
 import gif from '../../assets/others/authentication.gif'
 
 const Register = () => {
+  const handleRegister = (e) => {
+    e.preventDefault()
+    const form = e.target;
+    const name = form.name.value;
+  }
     return (
         <div className="hero min-h-screen bg-white text-indigo-500">
         <div className="hero-content flex-col lg:flex-row">

@@ -1,3 +1,54 @@
 #login {
-    background-image: url('../../assets/others/authentication.png');
+  background-image: url("../../assets/others/authentication.png");
+}
+
+.login-bg {
+  background-image: url("../../assets/others/background.jpg");
+  
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 120%;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    padding: 20px;
+    background-color: red;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 300px;
+}
+
+.input {
+    margin-bottom: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.button {
+    padding: 10px;
+    font-size: 16px;
+}
+
+/* Media query for devices wider than 600px */
+@media (min-width: 600px) {
+    .form {
+        max-width: 400px;
+    }
+    .input {
+        padding: 15px;
+        font-size: 18px;
+    }
+    .button {
+        padding: 15px;
+        font-size: 18px;
+    }
 }
