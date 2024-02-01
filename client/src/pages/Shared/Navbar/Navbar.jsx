@@ -58,7 +58,8 @@ const Navbar = () => {
       <li>
         {
           user ? <div>
-             <p>{user.email}</p>
+             <p>Welcome, {user.displayName}</p>
+             <img className="w-8 h-8" src={user.photoURL} alt="loading" />
           <button onClick={handleLoggedOut}>Logout</button>
          
           </div>

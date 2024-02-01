@@ -1,6 +1,7 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import gif from "../../assets/others/authentication-unscreen.gif";
 //import cover from '../../assets/others/authentication.gif'
+import 'animate.css';
 import Swal from "sweetalert2";
 import "./Login.css";
 import {loadCaptchaEnginge,LoadCanvasTemplate,validateCaptcha,} from "react-simple-captcha";
