@@ -2,15 +2,25 @@ import { Link } from "react-router-dom";
 import gif from "../../assets/others/authentication.gif";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
+import { useContext } from "react";
+import { AuthContext } from "../../Provider/AuthProvider/AuthProvider";
 const Register = () => {
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const {register, handleSubmit, reset,formState: { errors },} = useForm();
+  const {createUser} = useContext(AuthContext)
   const onSubmit = (data) => {
     console.log(data);
+    
+    const email = data.email;
+    const password = data.password;
+    createUser(email, password)
+    .then(result => {
+      const newUser = result.user;
+      console.log(newUser)
+
+    })
+    .catch(error => {
+      console.log(error.message)
+    })
     reset();
   };
   return (

@@ -1,34 +1,35 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import gif from "../../assets/others/authentication-unscreen.gif";
 //import cover from '../../assets/others/authentication.gif'
-
+import Swal from "sweetalert2";
 import "./Login.css";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
-  LoadCanvasTemplateNoReload,
   validateCaptcha,
 } from "react-simple-captcha";
 
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
+import { AuthContext } from "../../Provider/AuthProvider/AuthProvider";
+
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
+ const navigate = useNavigate()
+  //const captchaRef = useRef(null);
 
-  const captchaRef = useRef(null);
+  const { login } = useContext(AuthContext);
 
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
 
   //validating captcha
-  const handleValidateCaptcha = () => {
-    const captchaValue = captchaRef.current.value;
+  const handleValidateCaptcha = (e) => {
+    const captchaValue = e.target.value;
     if (validateCaptcha(captchaValue) == true) {
-      //alert('Captcha Matched');
       setDisabled(false);
     } else {
-      //alert('Captcha Does Not Match');
       setDisabled(true);
     }
   };
@@ -38,14 +39,40 @@ const Login = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
-    const user = { email, password };
-    console.log(user);
+    // const user = { email, password };
+    // console.log(user);
+    login(email, password)
+      .then((result) => {
+        const loggedUser = result.user;
+        console.log(loggedUser);
+        Swal.fire({
+          title: "User logged in successfully",
+          
+          
+          showClass: {
+            popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__slower
+          `,
+          },
+          hideClass: {
+            popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__slower
+          `,
+          },
+        });
+        navigate('/')
+      })
+      .catch((error) => console.log(error.message));
   };
   return (
     <>
-    <Helmet>
-      <title>TOH | Login</title>
-    </Helmet>
+      <Helmet>
+        <title>TOH | Login</title>
+      </Helmet>
       <div className="container">
         <div
           className=" hero  min-h-screen bg-white text-indigo-500 login-bg "
@@ -99,29 +126,24 @@ const Login = () => {
                     <LoadCanvasTemplate />
                   </label>
                   <input
+                   onBlur={handleValidateCaptcha}
                     type="text"
                     placeholder="Type captcha here"
-                    ref={captchaRef}
                     name="captcha"
                     className="input input-bordered"
                     required
                   />
                 </div>
-                <button
-                  onClick={handleValidateCaptcha}
-                  className="btn btn-outline btn-xs bg-blue-950 text-white"
-                >
-                  Validate
-                </button>
+
                 <div className="form-control mt-6">
-                  <button disabled={disabled} className="btn btn-success ">
-                    Login
-                  </button>
+                 
+                    <button disabled={disabled} className="btn btn-success ">
+                      Login
+                    </button>
+                 
                 </div>
                 <Link to="/register">
-                  {" "}
                   <span className="text-yellow-600">
-                    {" "}
                     Don't Have an account?
                   </span>
                   <input

@@ -3,8 +3,36 @@ import logo from '../../../assets/tastehome.png'
 //import Mode from "../../../Layout/DarkMode/Mode";
 //import Theme from "../Theme/Theme";
 import Mode from "../../../Layout/DarkMode/Mode";
+import { useContext } from "react";
+import { AuthContext } from "../../../Provider/AuthProvider/AuthProvider";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
+  const {user, logOut} = useContext(AuthContext)
+
+  
+  const handleLoggedOut = () => {
+    logOut()
+    .then(()=> {
+      Swal.fire({
+        title: "User logged out successfully",
+        showClass: {
+          popup: `
+            animate__animated
+            animate__fadeInUp
+            animate__faster
+          `
+        },
+        hideClass: {
+          popup: `
+            animate__animated
+            animate__fadeOutDown
+            animate__faster
+          `
+        }
+      });
+    })
+  }
   const navItems = (
     <>
       <li>
@@ -28,7 +56,15 @@ const Navbar = () => {
       </li>
 
       <li>
-        <NavLink to="/login">Login</NavLink>
+        {
+          user ? <div>
+             <p>{user.email}</p>
+          <button onClick={handleLoggedOut}>Logout</button>
+         
+          </div>
+          :
+          <NavLink to="/login">Login</NavLink>
+        }
       </li>
     </>
   );
