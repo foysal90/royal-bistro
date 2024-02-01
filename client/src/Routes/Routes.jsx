@@ -8,6 +8,7 @@ import ErrorElement from "../components/ErrorElement/ErrorElement";
 import Register from "../pages/Register/Register";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Profile from "../pages/Shared/Profile/Profile";
+import Cart from "../pages/Shared/Cart/Cart";
 
 
 export const router = createBrowserRouter([
@@ -33,12 +34,16 @@ export const router = createBrowserRouter([
         element: <Register/>
       },
       {
+        path: "/cart",
+        element: <ProtectedRoutes><Cart/></ProtectedRoutes>
+      },
+      {
         path: "/profile",
         element: <ProtectedRoutes><Profile/></ProtectedRoutes>
       },
       {
         path: "/order/:category",
-        element:<ProtectedRoutes> <OrderFood /></ProtectedRoutes>,
+        element:<OrderFood />,
       },
     ],
   },

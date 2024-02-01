@@ -6,6 +6,8 @@ import Mode from "../../../Layout/DarkMode/Mode";
 import { useContext } from "react";
 import { AuthContext } from "../../../Provider/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
+import { FcBusinessman, FcExport } from "react-icons/fc";
+import { FaCartPlus } from "react-icons/fa";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -52,6 +54,12 @@ const Navbar = () => {
       <li>
         <NavLink to="/contactus">Dashboard</NavLink>
       </li>
+      <li>
+        <Link to='/cart' className="">
+        <FaCartPlus className="w-6 h-6" />
+          <div className="badge badge-secondary">0</div>
+        </Link>
+      </li>
 
       <li>
         {user ? (
@@ -72,18 +80,23 @@ const Navbar = () => {
                 className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-blue-950 text-white rounded-box w-52"
               >
                 <li>
-                  <Link to='/profile' className="justify-between">
-                    {
-                      user && <span>Profile</span>
-                    }
-                   
+                  <Link to="/profile" className="justify-between">
+                    <div className="flex gap-1">
+                      <FcBusinessman className="w-4 h-4" />
+                      <span>Profile</span>
+                    </div>
                   </Link>
                 </li>
                 <li>
-                <p><Mode /> </p>
+                  <p>
+                    <Mode />
+                  </p>
                 </li>
                 <li>
-                  <button onClick={handleLoggedOut}>Logout</button>
+                  <div className="flex gap-1">
+                    <FcExport className="w-6 h-6" />
+                    <button onClick={handleLoggedOut}>Logout</button>
+                  </div>
                 </li>
               </ul>
             </div>
