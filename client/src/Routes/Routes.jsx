@@ -6,6 +6,7 @@ import OrderFood from "../pages/Order/OrderFood/OrderFood";
 import Login from "../pages/Login/Login";
 import ErrorElement from "../components/ErrorElement/ErrorElement";
 import Register from "../pages/Register/Register";
+import ProtectedRoutes from "./ProtectedRoutes";
 
 
 export const router = createBrowserRouter([
@@ -32,7 +33,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/order/:category",
-        element: <OrderFood />,
+        element:<ProtectedRoutes> <OrderFood /></ProtectedRoutes>,
       },
     ],
   },

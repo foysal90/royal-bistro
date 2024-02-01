@@ -1,25 +1,19 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import gif from "../../assets/others/authentication-unscreen.gif";
 //import cover from '../../assets/others/authentication.gif'
 import Swal from "sweetalert2";
 import "./Login.css";
-import {
-  loadCaptchaEnginge,
-  LoadCanvasTemplate,
-  validateCaptcha,
-} from "react-simple-captcha";
-
+import {loadCaptchaEnginge,LoadCanvasTemplate,validateCaptcha,} from "react-simple-captcha";
 import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Provider/AuthProvider/AuthProvider";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
- const navigate = useNavigate()
-  //const captchaRef = useRef(null);
-
+  const navigate = useNavigate();
   const { login } = useContext(AuthContext);
-
+ const location = useLocation()
+ const from = location.state?.from?.pathname || '/';
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -30,6 +24,7 @@ const Login = () => {
     if (validateCaptcha(captchaValue) == true) {
       setDisabled(false);
     } else {
+      Swal.fire("Captcha did not match!");
       setDisabled(true);
     }
   };
@@ -47,24 +42,23 @@ const Login = () => {
         console.log(loggedUser);
         Swal.fire({
           title: "User logged in successfully",
-          
-          
+
           showClass: {
             popup: `
             animate__animated
             animate__fadeInUp
-            animate__slower
+         
           `,
           },
           hideClass: {
             popup: `
             animate__animated
             animate__fadeOutDown
-            animate__slower
+           
           `,
           },
         });
-        navigate('/')
+        navigate(from, {replace: true});
       })
       .catch((error) => console.log(error.message));
   };
@@ -126,7 +120,7 @@ const Login = () => {
                     <LoadCanvasTemplate />
                   </label>
                   <input
-                   onBlur={handleValidateCaptcha}
+                    onBlur={handleValidateCaptcha}
                     type="text"
                     placeholder="Type captcha here"
                     name="captcha"
@@ -136,11 +130,9 @@ const Login = () => {
                 </div>
 
                 <div className="form-control mt-6">
-                 
-                    <button disabled={disabled} className="btn btn-success ">
-                      Login
-                    </button>
-                 
+                  <button disabled={disabled} className="btn btn-success ">
+                    Login
+                  </button>
                 </div>
                 <Link to="/register">
                   <span className="text-yellow-600">
