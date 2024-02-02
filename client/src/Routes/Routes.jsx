@@ -9,6 +9,9 @@ import Register from "../pages/Register/Register";
 import ProtectedRoutes from "./ProtectedRoutes";
 import Profile from "../pages/Shared/Profile/Profile";
 import Cart from "../pages/Shared/Cart/Cart";
+import Dashboard from "../Layout/Dashboard";
+import MyCart from "../pages/DashBoard/MyCart/MyCart";
+
 
 
 export const router = createBrowserRouter([
@@ -33,6 +36,7 @@ export const router = createBrowserRouter([
         path: "/register",
         element: <Register/>
       },
+  
       {
         path: "/cart",
         element: <ProtectedRoutes><Cart/></ProtectedRoutes>
@@ -47,4 +51,16 @@ export const router = createBrowserRouter([
       },
     ],
   },
+  {
+    path: '/dashboard',
+    element: <Dashboard/>,
+    errorElement: <ErrorElement/>,
+    children: [
+      {
+        path: 'mycart',
+        element: <MyCart/>
+      }
+
+    ]
+  }
 ]);

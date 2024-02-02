@@ -54,10 +54,10 @@ const Navbar = () => {
         <Link to="/order/salad">order Food</Link>
       </li>
       <li>
-        <NavLink to="/contactus">Dashboard</NavLink>
+        <NavLink to="/dashboard">Dashboard</NavLink>
       </li>
       <li>
-        <Link to='/cart' className="">
+        <Link to='/dashboard/mycart' className="">
         <FaCartPlus className="w-6 h-6" />
           <div className="badge badge-secondary">{cart?.length || 0}</div>
         </Link>
