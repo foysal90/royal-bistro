@@ -69,7 +69,13 @@ const FoodCard = ({ item }) => {
       <div className="card-body items-center text-center">
         <h2 className="card-title">{name}</h2>
         <p>{recipe}</p>
-        <div className="card-actions">
+        <div className="card-actions flex justify-between items-center">
+        <select className="select select-bordered select-xs w-20 max-w-xs">
+  <option disabled selected>1</option>
+  <option value='2'>2</option>
+  <option value='3'>3</option>
+  <option value='4'>4</option>
+</select>
           <button
             onClick={() => handleAddToCart(item)}
             className="btn bg-yellow-700 hover:bg-yellow-900 text-white"
