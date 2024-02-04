@@ -3,3 +3,4 @@
 //cards imported from swiper js
 //helmet=> npm i react-helmet-async
 //npm install --save react-tabs//https://tanstack.com/query/latest
+//npm i react-typical

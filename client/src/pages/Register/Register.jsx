@@ -21,19 +21,38 @@ const Register = () => {
       console.log(newUser)
       updateUserprofile(data.name, data.photoURL)
      .then(() => {
-      
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "user created successfully",
-        showConfirmButton: false,
-        timer: 1500
-      });
-      logOut()
-      .then(() => {
-        navigate('/login')
-
+      const saveUser = {name:data.name, email: data.email, photo: data.photoURL}
+      fetch('http://localhost:5000/users', {
+        method: 'POST',
+        headers: {
+          'content-type' : 'application/json'
+        },
+        body : JSON.stringify(saveUser)
       })
+      .then(res => res.json())
+      .then(data => {
+        console.log(data)
+       
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "user created successfully",
+            showConfirmButton: false,
+            timer: 1500
+          });
+          logOut()
+          .then(() => {
+            navigate('/login')
+    
+          })
+         
+        
+          
+        
+      })
+    
+     
+     
 
      })
      .catch(error => {
@@ -54,7 +73,7 @@ const Register = () => {
        
       });
     })
-    reset();
+   
   };
   return (
     <>

@@ -11,7 +11,9 @@ const MyCart = () => {
   const handleDelete = (row) => {
     Swal.fire({
       title: `Do You Want to delete ${row.name} ?`,
-
+      imageUrl: `${row.image}`,
+      imageWidth: 400,
+      imageHeight: 200,
       icon: "warning",
       showCancelButton: true,
       confirmButtonColor: "#3085d6",
@@ -27,10 +29,38 @@ const MyCart = () => {
             console.log(data);
             if (data.deletedCount > 0) {
               refetch();
+              let timerInterval;
               Swal.fire({
-                title: "Deleted!",
-                text: `${row.name} has been deleted`,
-                icon: "success"
+                position: "top-end",
+                title: `${row.name} will delete in <b></b> milliseconds.`,
+                
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                      timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                  },
+                  willClose: () => {
+                    clearInterval(timerInterval);
+                  },
+                
+                showClass: {
+                  popup: `
+                    animate__animated
+                    animate__fadeInUp
+                    animate__faster
+                  `,
+                },
+                hideClass: {
+                  popup: `
+                    animate__animated
+                    animate__fadeOutDown
+                    animate__faster
+                  `,
+                },
               });
             }
           });

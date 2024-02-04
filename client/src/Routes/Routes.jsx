@@ -11,6 +11,7 @@ import Profile from "../pages/Shared/Profile/Profile";
 import Cart from "../pages/Shared/Cart/Cart";
 import Dashboard from "../Layout/Dashboard";
 import MyCart from "../pages/DashBoard/MyCart/MyCart";
+import UserProfile from "../pages/DashBoard/UserProfile/UserProfile";
 
 
 
@@ -53,12 +54,16 @@ export const router = createBrowserRouter([
   },
   {
     path: '/dashboard',
-    element: <Dashboard/>,
+    element: <ProtectedRoutes><Dashboard/></ProtectedRoutes>,
     errorElement: <ErrorElement/>,
     children: [
       {
         path: 'mycart',
         element: <MyCart/>
+      },
+      {
+        path: 'myprofile',
+        element: <UserProfile/>
       }
 
     ]
