@@ -6,6 +6,7 @@ import { Helmet } from "react-helmet-async";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 const Register = () => {
   const {register, handleSubmit, reset,formState: { errors },} = useForm();
   const {createUser, updateUserprofile, logOut} = useContext(AuthContext)
@@ -194,7 +195,8 @@ const Register = () => {
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Register</button>
               </div>
-              <Link to="/login">
+              <SocialLogin/>
+              <Link to="/login"> <span>Alredy have an Account? </span>
                 <input type="submit" value="Login" />
               </Link>
             </form>

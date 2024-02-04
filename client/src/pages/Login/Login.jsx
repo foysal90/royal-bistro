@@ -8,6 +8,7 @@ import {loadCaptchaEnginge,LoadCanvasTemplate,validateCaptcha,} from "react-simp
 import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Provider/AuthProvider/AuthProvider";
+import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 
 const Login = () => {
   const [disabled, setDisabled] = useState(true);
@@ -142,6 +143,7 @@ const Login = () => {
                     Login
                   </button>
                 </div>
+                <SocialLogin/>
                 <Link to="/register">
                   <span className="text-yellow-600">
                     Don't Have an account?
