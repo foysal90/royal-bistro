@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { Helmet } from "react-helmet-async";
 import { FaTrashAlt, FaUserAlt, FaUserShield } from "react-icons/fa";
+import Swal from "sweetalert2";
 
 const AllUsers = () => {
   const { data: users = [], refetch } = useQuery({
@@ -11,14 +12,45 @@ const AllUsers = () => {
     },
   });
 
-  const handleAdmin = id => {
-    
-  }
-  const handleDelete = id => {
+  const handleAdmin = (user) => {
+    fetch(`http://localhost:5000/users/admin/${user._id}`, {
+      method: "PATCH",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("admin data", data);
+        if (data.modifiedCount) {
+          refetch();
 
-  }
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${user.name} is an Admin Now !!!`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+  };
+  const handleDelete = (user) => {
+    fetch(`http://localhost:5000/users/admin/${user._id}`, {
+      method: "DELETE",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.deletedCount > 0) {
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${user.name} has been Deleted !!!`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      });
+  };
 
-  
   return (
     <div className="w-full ml-20">
       <Helmet>
@@ -43,15 +75,23 @@ const AllUsers = () => {
                 <th>{index + 1}</th>
                 <td>{user.name}</td>
                 <td>{user.email}</td>
-                <td>{
-                user.role === 'admin' ? 'admin'
-                :
-                <button onClick={() => handleAdmin(user._id)} className="btn btn-circle bg-yellow-600 btn-sm">
-                    <FaUserShield className="text-white"/>
-                  </button>
-                }</td>
                 <td>
-                  <button onClick={() => handleDelete(user._id)} className="btn btn-circle bg-red-600 btn-sm">
+                  {user.role === "admin" ? (
+                    "admin"
+                  ) : (
+                    <button
+                      onClick={() => handleAdmin(user)}
+                      className="btn btn-circle bg-yellow-600 btn-sm"
+                    >
+                      <FaUserShield className="text-white" />
+                    </button>
+                  )}
+                </td>
+                <td>
+                  <button
+                    onClick={() => handleDelete(user)}
+                    className="btn btn-circle bg-red-600 btn-sm"
+                  >
                     <FaTrashAlt className="text-white"></FaTrashAlt>
                   </button>
                 </td>
