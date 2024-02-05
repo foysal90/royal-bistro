@@ -12,6 +12,8 @@ import Cart from "../pages/Shared/Cart/Cart";
 import Dashboard from "../Layout/Dashboard";
 import MyCart from "../pages/DashBoard/MyCart/MyCart";
 import UserProfile from "../pages/DashBoard/UserProfile/UserProfile";
+import AllUsers from "../pages/DashBoard/AllUsers/AllUsers";
+import ManageBookings from "../pages/DashBoard/ManageBookings/ManageBookings";
 
 
 
@@ -55,7 +57,7 @@ export const router = createBrowserRouter([
   {
     path: '/dashboard',
     element: <ProtectedRoutes><Dashboard/></ProtectedRoutes>,
-    errorElement: <ErrorElement/>,
+    // errorElement: <ErrorElement/>,
     children: [
       {
         path: 'mycart',
@@ -64,6 +66,14 @@ export const router = createBrowserRouter([
       {
         path: 'myprofile',
         element: <UserProfile/>
+      },
+      {
+        path: 'allusers',
+        element: <AllUsers/>
+      },
+      {
+        path: 'managebookings',
+        element: <ManageBookings/>
       }
 
     ]

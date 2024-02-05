@@ -1,13 +1,16 @@
 import { MdOutlineMenuBook } from "react-icons/md";
 import { FaHome, FaShoppingCart } from "react-icons/fa";
 import { FaCalendarCheck, FaWallet } from "react-icons/fa6";
-
+import { CiForkAndKnife } from "react-icons/ci";
+import { FcConferenceCall, FcDataSheet, FcList, FcPlanner, FcTodoList } from "react-icons/fc";
 import { BiSolidContact, BiSolidShoppingBags } from "react-icons/bi";
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../hooks/useCart";
 
 const Dashboard = () => {
-  const [cart] = useCart()
+  const [cart] = useCart();
+  //todo
+  const isAdmin = true;
   return (
     <div className="drawer lg:drawer-open bg-transparent ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -29,22 +32,90 @@ const Dashboard = () => {
         ></label>
         <ul className="menu p-4 w-80 min-h-full bg-[#d1a054] ">
           {/* Sidebar content here */}
-          
-          <li ><NavLink to='/' ><FaHome></FaHome>User Home</NavLink></li>
-          <li ><NavLink to='/dashboard/myprofile'><FaHome></FaHome>My Profile</NavLink></li>
-          <li><NavLink to='/reservation'><FaCalendarCheck></FaCalendarCheck>Reservations</NavLink></li>
-          <li><NavLink to='/history'><FaWallet></FaWallet>Payment History</NavLink></li>
-          <li className="w-40"> 
-            <NavLink to='/dashboard/mycart'>
-            <FaShoppingCart ></FaShoppingCart>
-            My Cart <span className="badge badge-primary text-white" >{cart?.length}</span>
-            </NavLink> </li>
+
+          {isAdmin ? (
+            <>
+              <li>
+                <NavLink to="/">
+                  <FaHome></FaHome>Admin Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/myprofile">
+                <CiForkAndKnife />Add Items
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/reservation">
+                <FcList />Manage Items
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/managebookings">
+                <FcDataSheet />Manage Bookings
+                </NavLink>
+              </li>
+              <li className="w-40">
+                <NavLink to="/dashboard/allusers">
+                <FcConferenceCall />All Users
+                </NavLink>
+              </li>
+            </>
+          ) : (
+            <>
+              <li>
+                <NavLink to="/">
+                  <FaHome></FaHome>User Home
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/dashboard/myprofile">
+                  <FaHome></FaHome>My Profile
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/reservation">
+                <FcPlanner />Reservations
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/history">
+                  <FaWallet></FaWallet>Payment History
+                </NavLink>
+              </li>
+              <li className="w-40">
+                <NavLink to="/dashboard/mycart">
+                  <FaShoppingCart></FaShoppingCart>
+                  My Cart{" "}
+                  <span className="badge badge-primary text-white">
+                    {cart?.length}
+                  </span>
+                </NavLink>{" "}
+              </li>
+            </>
+          )}
+
           <div className="divider"></div>
-          <li><NavLink to='/'><FaHome></FaHome>Home</NavLink></li>
-          <li><NavLink to='/menu'><MdOutlineMenuBook></MdOutlineMenuBook>Menu</NavLink></li>
-          <li><NavLink to='/order/salad'><BiSolidShoppingBags ></BiSolidShoppingBags>Shop</NavLink></li>
-          <li><NavLink to='contactus'><BiSolidContact ></BiSolidContact>Contact</NavLink></li>
-          
+          <li>
+            <NavLink to="/">
+              <FaHome></FaHome>Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/menu">
+              <MdOutlineMenuBook></MdOutlineMenuBook>Menu
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/order/salad">
+              <BiSolidShoppingBags></BiSolidShoppingBags>Shop
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="contactus">
+              <BiSolidContact></BiSolidContact>Contact
+            </NavLink>
+          </li>
         </ul>
       </div>
     </div>
