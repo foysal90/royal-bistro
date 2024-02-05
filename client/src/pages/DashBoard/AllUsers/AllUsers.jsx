@@ -11,17 +11,24 @@ const AllUsers = () => {
     },
   });
 
+  const handleAdmin = id => {
+    
+  }
+  const handleDelete = id => {
+
+  }
+
   
   return (
-    <div className="w-full">
+    <div className="w-full ml-20">
       <Helmet>
         <title> TOH | All users </title>
       </Helmet>
       <h1>all users : {users.length}</h1>
       <div className="overflow-x-auto">
-        <table className="table table-zebra text-teal-600">
+        <table className="table  bg-gray-50 text-slate-800">
           {/* head */}
-          <thead>
+          <thead className="text-violet-500">
             <tr>
               <th>#</th>
               <th>Name</th>
@@ -39,12 +46,12 @@ const AllUsers = () => {
                 <td>{
                 user.role === 'admin' ? 'admin'
                 :
-                <button className="btn btn-circle bg-yellow-600 btn-sm">
+                <button onClick={() => handleAdmin(user._id)} className="btn btn-circle bg-yellow-600 btn-sm">
                     <FaUserShield className="text-white"/>
                   </button>
                 }</td>
                 <td>
-                  <button className="btn btn-circle bg-red-600 btn-sm">
+                  <button onClick={() => handleDelete(user._id)} className="btn btn-circle bg-red-600 btn-sm">
                     <FaTrashAlt className="text-white"></FaTrashAlt>
                   </button>
                 </td>

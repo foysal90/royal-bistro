@@ -45,6 +45,18 @@ async function run() {
         res.send(user)
     })
 
+    app.patch('/users/admin/:id', async(req,res) => {
+        const id = req.params.id;
+        const filter = {_id: new ObjectId(id)}
+        const doc = {
+            $set: {
+                role: 'admin'
+            }
+        }
+        const updatedRole = await userCollection.updateOne(filter, doc)
+        res.send(updatedRole)
+    })
+
     //menu apis
     app.get('/menu', async(req,res) => {
         const query = await menuCollection.find().toArray()
