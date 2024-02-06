@@ -32,11 +32,26 @@ async function run() {
       res.send({ token });
     });
 
+    //verifying admin middleware
+    const verifyAdmin =async(req,res,next) => {
+        const email = req.params.email;
+        const query = {email: email}
+        const user = await userCollection.findOne(query)
+        if (user?.role !== 'admin') {
+            return res.status(403).send({error: true, message: 'forbidden access'})
+            
+        }
+        next();
+
+    }
+
     //users apis
-    app.get("/users",verifyJwt,  async (req, res) => {
+    app.get("/users",verifyJwt,verifyAdmin,  async (req, res) => {
       const user = await userCollection.find().toArray();
       res.send(user);
     });
+    
+
     app.post("/users", async (req, res) => {
       const user = req.body;
       console.log(user);
