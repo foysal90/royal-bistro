@@ -4,6 +4,7 @@ const { MongoClient, ObjectId } = require("mongodb");
 const app = express();
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
+const { verifyJwt } = require("./jwt");
 const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
@@ -48,11 +49,22 @@ async function run() {
       const result = await userCollection.insertOne(user);
       res.send(user);
     });
-
-    // app.get('/users/admin', async(req,res) => {
-    //     const userAdmin = await userCollection.find().toArray()
-    //     res.send(userAdmin)
-    // })
+    
+    //security layer verifyJwt
+    app.get('/users/admin/:email', verifyJwt, async(req,res) => {
+        const email = req.params.email;
+        //checking if the correct user email token or not
+        const userEmailToken = req.decoded.email;
+        if (userEmailToken !== email) {
+            res.send({admin: false})
+            
+        }
+        const query = {email: email}
+        const user = await userCollection.findOne(query)
+         //checking if the user is admin or not
+        const adminRole = {admin: user?.role === 'admin'}
+        res.send(adminRole);
+    })
 
     app.patch("/users/admin/:id", async (req, res) => {
       const id = req.params.id;
@@ -67,12 +79,12 @@ async function run() {
       res.send(updatedRole);
     });
 
-    app.delete("/users/admin/:id", async (req, res) => {
-      const id = req.params.id;
-      const filter = { _id: new ObjectId(id) };
-      const deletedAdmin = await userCollection.deleteOne(filter);
-      res.send(deletedAdmin);
-    });
+    // app.delete("/users/admin/:id", async (req, res) => {
+    //   const id = req.params.id;
+    //   const filter = { _id: new ObjectId(id) };
+    //   const deletedAdmin = await userCollection.deleteOne(filter);
+    //   res.send(deletedAdmin);
+    // });
 
     //menu apis
     app.get("/menu", async (req, res) => {
@@ -85,10 +97,15 @@ async function run() {
       res.send(query);
     });
 
-    app.get("/carts", async (req, res) => {
+    app.get("/carts", verifyJwt, async (req, res) => {
       const email = req.query.email;
       if (!email) {
         res.send([]);
+      }
+      const decodedEmail = req.decoded.email;
+      if (email !== decodedEmail) {
+        return res.status(403).send({error: true, message: 'forbidden access, Please login with your valid email'})
+        
       }
       const query = { email: email };
       const result = await cartCollection.find(query).toArray();
