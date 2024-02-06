@@ -8,7 +8,7 @@ import { AuthContext } from "../../Provider/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 const Register = () => {
-  const {register, handleSubmit, reset,formState: { errors },} = useForm();
+  const {register, handleSubmit, formState: { errors },} = useForm();
   const {createUser, updateUserprofile, logOut} = useContext(AuthContext)
   const navigate = useNavigate()
   const onSubmit = (data) => {

@@ -6,13 +6,18 @@ import { FcConferenceCall, FcDataSheet, FcList, FcPlanner } from "react-icons/fc
 import { BiSolidContact, BiSolidShoppingBags } from "react-icons/bi";
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../hooks/useCart";
+import useAdmin from "../hooks/useAdmin";
 
 
 const Dashboard = () => {
   const [cart] = useCart();
 
   //todo
-  const isAdmin = true;
+  //const isAdmin = false;
+  const [isAdmin] = useAdmin();
+
+
+
   return (
     <div className="drawer lg:drawer-open bg-transparent ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -35,7 +40,7 @@ const Dashboard = () => {
         <ul className="menu p-4 w-80 min-h-full bg-[#d1a054] ">
           {/* Sidebar content here */}
 
-          {isAdmin ? (
+          {isAdmin ? 
             <>
               <li>
                 <NavLink to="/">
@@ -63,7 +68,7 @@ const Dashboard = () => {
                 </NavLink>
               </li>
             </>
-          ) : (
+           : 
             <>
               <li>
                 <NavLink to="/">
@@ -88,14 +93,14 @@ const Dashboard = () => {
               <li className="w-40">
                 <NavLink to="/dashboard/mycart">
                   <FaShoppingCart></FaShoppingCart>
-                  My Cart{" "}
+                  My Cart
                   <span className="badge badge-primary text-white">
                     {cart?.length}
                   </span>
-                </NavLink>{" "}
+                </NavLink>
               </li>
             </>
-          )}
+          }
 
           <div className="divider"></div>
           <li>

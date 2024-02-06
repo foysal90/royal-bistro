@@ -33,7 +33,7 @@ async function run() {
     });
 
     //users apis
-    app.get("/users", async (req, res) => {
+    app.get("/users",verifyJwt,  async (req, res) => {
       const user = await userCollection.find().toArray();
       res.send(user);
     });
