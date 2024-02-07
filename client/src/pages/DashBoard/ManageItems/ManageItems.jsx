@@ -1,11 +1,78 @@
 import { Helmet } from "react-helmet-async";
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import useMenu from "../../../hooks/useMenu";
+import { FaTrashAlt } from "react-icons/fa";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const ManageItems = () => {
-  const [menu] = useMenu();
+  const [menu, , refetch] = useMenu();
+  const [axiosSecure] = useAxiosSecure()
+
+  const handleDelete = (item) => {
+    Swal.fire({
+        title: `Do You Want to delete ${item.name} ?`,
+        imageUrl: `${item.image}`,
+        imageWidth: 400,
+        imageHeight: 200,
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: `Yes, delete it !!`,
+      })
+      .then(result => {
+        if (result.isConfirmed) {
+            axiosSecure.delete(`/menu/${item._id}`)
+            .then(res => {
+                console.log('deleted item', res.data)
+                if (res.data.deletedCount >0) {
+                    refetch();
+                    //alert(`${item.name} has been deleted`)
+                    let timerInterval;
+              Swal.fire({
+                position: "top-center",
+                title: `${item.name} will delete in <b></b> milliseconds.`,
+                
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                    const timer = Swal.getPopup().querySelector("b");
+                    timerInterval = setInterval(() => {
+                      timer.textContent = `${Swal.getTimerLeft()}`;
+                    }, 100);
+                  },
+                  willClose: () => {
+                    clearInterval(timerInterval);
+                  },
+                  showClass: {
+                    popup: `
+                      animate__animated
+                      animate__fadeInUp
+                      animate__faster
+                    `,
+                  },
+                  hideClass: {
+                    popup: `
+                      animate__animated
+                      animate__fadeOutDown
+                      animate__faster
+                    `,
+                  },
+                })
+                }
+               
+            })
+        }
+      })
+
+  }
+   
+            
+          
 
   return (
-    <div className="w-full pl-10 ">
+    <div className="w-full md:pl-10  ">
       <Helmet>
         <title>Dashboard | Manage Item</title>
       </Helmet>
@@ -15,7 +82,7 @@ const ManageItems = () => {
         heading="Manage all items"
       ></SectionTitle>
       <h1 className="text-center my-5 font-semibold">
-        Total items : {menu.length}
+        Total items : {menu.length} 
       </h1>
 
       <div className="overflow-x-auto">
@@ -38,7 +105,7 @@ const ManageItems = () => {
                 <td>
                   <div className="flex items-center gap-3">
                     <div className="avatar">
-                      <div className="mask mask-squircle w-24 h-24">
+                      <div className="mask mask-squircle lg:w-24 lg:h-24 sm:w-8 sm:h-8">
                         <img src={item.image} alt={item.name} />
                       </div>
                     </div>
@@ -53,7 +120,12 @@ const ManageItems = () => {
                   <button className="btn btn-ghost btn-xs">edit</button>
                 </td>
                 <td>
-                  <button className="btn btn-ghost btn-xs">delete</button>
+                <button
+                    onClick={() => handleDelete(item)}
+                    className="btn btn-circle bg-red-600 btn-sm"
+                  >
+                    <FaTrashAlt className="text-white"></FaTrashAlt>
+                  </button>
                 </td>
               </tr>
             ))}

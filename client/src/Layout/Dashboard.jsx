@@ -1,5 +1,5 @@
 import { MdOutlineMenuBook } from "react-icons/md";
-import { FaHome, FaShoppingCart } from "react-icons/fa";
+import { FaBars, FaHome, FaShoppingCart } from "react-icons/fa";
 import { FaWallet } from "react-icons/fa6";
 import { CiForkAndKnife } from "react-icons/ci";
 import { FcConferenceCall, FcDataSheet, FcList, FcPlanner } from "react-icons/fc";
@@ -22,15 +22,15 @@ const Dashboard = () => {
   return (
     <div className="drawer lg:drawer-open bg-transparent ">
       <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
-      <div className="drawer-content flex flex-col items-center justify-center ">
+      <div className="drawer-content ">
         {/* Page content here */}
-        <Outlet></Outlet>
         <label
           htmlFor="my-drawer-2"
           className="btn btn-primary drawer-button lg:hidden"
         >
-          Open drawer
+          <FaBars />
         </label>
+        <Outlet></Outlet>
       </div>
       <div className="drawer-side">
         <label
