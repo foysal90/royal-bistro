@@ -48,7 +48,7 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/dashboard/myprofile">
+                <NavLink to="/dashboard/additem">
                 <CiForkAndKnife />Add Items
                 </NavLink>
               </li>

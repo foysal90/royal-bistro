@@ -14,6 +14,8 @@ import MyCart from "../pages/DashBoard/MyCart/MyCart";
 import UserProfile from "../pages/DashBoard/UserProfile/UserProfile";
 import AllUsers from "../pages/DashBoard/AllUsers/AllUsers";
 import ManageBookings from "../pages/DashBoard/ManageBookings/ManageBookings";
+import AddItem from "../pages/DashBoard/AddItem/AddItem";
+import AdminRoutes from "./AdminRoutes";
 
 
 
@@ -69,11 +71,15 @@ export const router = createBrowserRouter([
       },
       {
         path: 'allusers',
-        element: <AllUsers/>
+        element:<AdminRoutes> <AllUsers/></AdminRoutes>
       },
       {
         path: 'managebookings',
         element: <ManageBookings/>
+      },
+      {
+        path: 'additem',
+        element: <AdminRoutes><AddItem/></AdminRoutes>
       }
 
     ]

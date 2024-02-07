@@ -33,24 +33,23 @@ async function run() {
     });
 
     //verifying admin middleware
-    const verifyAdmin =async(req,res,next) => {
-        const email = req.params.email;
-        const query = {email: email}
-        const user = await userCollection.findOne(query)
-        if (user?.role !== 'admin') {
-            return res.status(403).send({error: true, message: 'forbidden access'})
-            
-        }
-        next();
-
-    }
+    const verifyAdmin = async (req, res, next) => {
+      const email = req.decoded.email;
+      const query = { email: email };
+      const user = await userCollection.findOne(query);
+      if (user?.role !== "admin") {
+        return res
+          .status(403)
+          .send({ error: true, message: "forbidden access" });
+      }
+      next();
+    };
 
     //users apis
-    app.get("/users",verifyJwt,verifyAdmin,  async (req, res) => {
+    app.get("/users", verifyJwt, verifyAdmin, async (req, res) => {
       const user = await userCollection.find().toArray();
       res.send(user);
     });
-    
 
     app.post("/users", async (req, res) => {
       const user = req.body;
@@ -64,22 +63,21 @@ async function run() {
       const result = await userCollection.insertOne(user);
       res.send(user);
     });
-    
+
     //security layer verifyJwt
-    app.get('/users/admin/:email', verifyJwt, async(req,res) => {
-        const email = req.params.email;
-        //checking if the correct user email token or not
-        const userEmailToken = req.decoded.email;
-        if (userEmailToken !== email) {
-            res.send({admin: false})
-            
-        }
-        const query = {email: email}
-        const user = await userCollection.findOne(query)
-         //checking if the user is admin or not
-        const adminRole = {admin: user?.role === 'admin'}
-        res.send(adminRole);
-    })
+    app.get("/users/admin/:email", verifyJwt, async (req, res) => {
+      const email = req.params.email;
+      //checking if the correct user email token or not
+      const userEmailToken = req.decoded.email;
+      if (userEmailToken !== email) {
+        res.send({ admin: false });
+      }
+      const query = { email: email };
+      const user = await userCollection.findOne(query);
+      //checking if the user is admin or not
+      const adminRole = { admin: user?.role === "admin" };
+      res.send(adminRole);
+    });
 
     app.patch("/users/admin/:id", async (req, res) => {
       const id = req.params.id;
@@ -94,12 +92,12 @@ async function run() {
       res.send(updatedRole);
     });
 
-    // app.delete("/users/admin/:id", async (req, res) => {
-    //   const id = req.params.id;
-    //   const filter = { _id: new ObjectId(id) };
-    //   const deletedAdmin = await userCollection.deleteOne(filter);
-    //   res.send(deletedAdmin);
-    // });
+    app.delete("/users/admin/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const deletedAdmin = await userCollection.deleteOne(filter);
+      res.send(deletedAdmin);
+    });
 
     //menu apis
     app.get("/menu", async (req, res) => {
@@ -119,8 +117,10 @@ async function run() {
       }
       const decodedEmail = req.decoded.email;
       if (email !== decodedEmail) {
-        return res.status(403).send({error: true, message: 'forbidden access, Please login with your valid email'})
-        
+        return res.status(403).send({
+          error: true,
+          message: "forbidden access, Please login with your valid email",
+        });
       }
       const query = { email: email };
       const result = await cartCollection.find(query).toArray();
