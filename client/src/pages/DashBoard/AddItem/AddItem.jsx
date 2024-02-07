@@ -1,6 +1,7 @@
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { useForm } from "react-hook-form";
-import Swal from 'sweetalert2'
+import Swal from "sweetalert2";
+import { FaUtensils } from "react-icons/fa6";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const imgHostingToken = import.meta.env.VITE_IMAGE_UPLOADER_KEY;
 const AddItem = () => {
@@ -8,6 +9,7 @@ const AddItem = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
   const image_hosting_URL = `https://api.imgbb.com/1/upload?key=${imgHostingToken}`;
@@ -37,21 +39,20 @@ const AddItem = () => {
             image: imgURL,
           };
           console.log(newItem);
-        //sending data to db
-        axiosSecure.post('/menu', newItem)
-        .then(data => {
+          //sending data to db
+          axiosSecure.post("/menu", newItem).then((data) => {
             if (data.data.insertedId) {
-                Swal.fire({
-                    title: "Sweet!",
-                    text: `${name} has been added`,
-                    imageUrl: `${imgURL}`,
-                    imageWidth: 400,
-                    imageHeight: 200,
-                    imageAlt: "Custom image"
-                  });
-                
+              reset();
+              Swal.fire({
+                title: "Sweet!",
+                text: `${name} has been added`,
+                imageUrl: `${imgURL}`,
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: "Custom image",
+              });
             }
-        })
+          });
         }
       });
   };
@@ -85,7 +86,7 @@ const AddItem = () => {
           </label>
         </div>
 
-        <div className="flex gap-5">
+        <div className="md:flex gap-5 sm:grid grid-cols-1">
           <div>
             <label className="form-control w-full">
               <div className="label ">
@@ -165,16 +166,22 @@ const AddItem = () => {
             )}
           </label>
         </div>
-        <div>
-          <input
-            className="btn btn-sm btn-success mt-5 w-48 text-white"
-            type="submit"
-            value="Add Item"
-          />
-        </div>
+
+        <button className="flex items-center justify-center  gap-2 btn btn-success btn-sm mt-5 w-48 text-white  ">
+          Add an item <FaUtensils />
+        </button>
       </form>
     </div>
   );
 };
 
 export default AddItem;
+
+{
+  /* <input
+            className="btn btn-sm btn-success mt-5 w-48 text-white relative"
+            type="submit"
+            value="Add Item"
+            
+          /> */
+}

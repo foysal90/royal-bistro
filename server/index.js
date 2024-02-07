@@ -104,7 +104,7 @@ async function run() {
       const query = await menuCollection.find().toArray();
       res.send(query);
     });
-    app.post('/menu', async(req,res) => {
+    app.post('/menu', verifyJwt, verifyAdmin, async(req,res) => {
       const newItem = req.body;
       console.log(newItem)
       const result = await menuCollection.insertOne(newItem);
