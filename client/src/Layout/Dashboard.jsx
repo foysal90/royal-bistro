@@ -7,6 +7,7 @@ import { BiSolidContact, BiSolidShoppingBags } from "react-icons/bi";
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useAdmin from "../hooks/useAdmin";
+import Mode from "./DarkMode/Mode";
 
 
 const Dashboard = () => {
@@ -123,8 +124,11 @@ const Dashboard = () => {
               <BiSolidContact></BiSolidContact>Contact
             </NavLink>
           </li>
+         <span className="bg-blue-600 w-20 p-1 rounded-full mx-auto "> <Mode/></span>
         </ul>
+       
       </div>
+      
     </div>
   );
 };

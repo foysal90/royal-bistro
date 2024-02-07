@@ -11,7 +11,7 @@ const Mode = () => {
   return (
     <div className={isDarkMode ? "dark-mode" : ""}>
      
-      <button onClick={toggleDarkMode}>
+      <button className="mx-5" onClick={toggleDarkMode}>
         {isDarkMode ?  <CiDark />: <MdDarkMode />}
       </button>
       {/* Rest of your component */}

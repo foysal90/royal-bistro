@@ -53,7 +53,7 @@ async function run() {
 
     app.post("/users", async (req, res) => {
       const user = req.body;
-      console.log(user);
+      //console.log(user);
       const query = { email: user.email };
       const existingUser = await userCollection.findOne(query);
       console.log("existing user", existingUser);
@@ -104,6 +104,12 @@ async function run() {
       const query = await menuCollection.find().toArray();
       res.send(query);
     });
+    app.post('/menu', async(req,res) => {
+      const newItem = req.body;
+      console.log(newItem)
+      const result = await menuCollection.insertOne(newItem);
+      res.send(result)
+    })
 
     app.get("/reviews", async (req, res) => {
       const query = await reviewCollection.find().toArray();

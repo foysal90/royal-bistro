@@ -1,7 +1,10 @@
 import SectionTitle from "../../../components/SectionTitle/SectionTitle";
 import { useForm } from "react-hook-form";
+import Swal from 'sweetalert2'
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 const imgHostingToken = import.meta.env.VITE_IMAGE_UPLOADER_KEY;
 const AddItem = () => {
+  const [axiosSecure] = useAxiosSecure();
   const {
     register,
     handleSubmit,
@@ -34,6 +37,21 @@ const AddItem = () => {
             image: imgURL,
           };
           console.log(newItem);
+        //sending data to db
+        axiosSecure.post('/menu', newItem)
+        .then(data => {
+            if (data.data.insertedId) {
+                Swal.fire({
+                    title: "Sweet!",
+                    text: `${name} has been added`,
+                    imageUrl: `${imgURL}`,
+                    imageWidth: 400,
+                    imageHeight: 200,
+                    imageAlt: "Custom image"
+                  });
+                
+            }
+        })
         }
       });
   };
@@ -80,20 +98,18 @@ const AddItem = () => {
                 {...register("category", { required: true })}
                 className="select select-bordered w-96"
               >
-               
                 <option disabled>Pick One</option>
-                <option value="Pizza">Pizza</option>
-                <option value="Soup">Soup</option>
-                <option value="Salad">Salad</option>
-                <option value="Dessert">Dessert</option>
-                <option value="Offered">Offered</option>
-                <option value="Drinks">Drinks</option>
+                <option value="pizza">pizza</option>
+                <option value="soup">soup</option>
+                <option value="salad">salad</option>
+                <option value="dessert">dessert</option>
+                <option value="offered">offered</option>
+                <option value="drinks">drinks</option>
               </select>
-              
             </label>
             {errors.recipe && errors.recipe.type === "required" && (
-                <span className="text-red-600">category Name is required</span>
-              )}
+              <span className="text-red-600">category Name is required</span>
+            )}
           </div>
           <div>
             <label className="form-control w-full  ">
@@ -103,14 +119,14 @@ const AddItem = () => {
                 </span>
               </div>
               <input
-                type="number"
+                type="text"
                 placeholder="Price"
                 className="input input-bordered w-96 "
                 {...register("price", { required: true })}
               />
               {errors.price && errors.price.type === "required" && (
-                  <span className="text-red-600">price is required</span>
-                )}
+                <span className="text-red-600">price is required</span>
+              )}
             </label>
           </div>
         </div>
@@ -128,8 +144,8 @@ const AddItem = () => {
               {...register("recipe", { required: true })}
             ></textarea>
             {errors.recipe && errors.recipe.type === "required" && (
-                <span className="text-red-600">Recipe details is required</span>
-              )}
+              <span className="text-red-600">Recipe details is required</span>
+            )}
           </label>
         </div>
         <div>
@@ -145,8 +161,8 @@ const AddItem = () => {
               className="file-input file-input-accent  w-full "
             />
             {errors.image && errors.image.type === "required" && (
-                <span className="text-red-600">image is required</span>
-              )}
+              <span className="text-red-600">image is required</span>
+            )}
           </label>
         </div>
         <div>
