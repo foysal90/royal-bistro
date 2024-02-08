@@ -17,6 +17,9 @@ import ManageBookings from "../pages/DashBoard/ManageBookings/ManageBookings";
 import AddItem from "../pages/DashBoard/AddItem/AddItem";
 import AdminRoutes from "./AdminRoutes";
 import ManageItems from "../pages/DashBoard/ManageItems/ManageItems";
+//import EditItem from "../pages/DashBoard/EditItem/EditItem";
+import UpdateItem from "../pages/DashBoard/UpdateItem/UpdateItem";
+import Payment from "../pages/DashBoard/Payment/Payment";
 
 
 
@@ -71,12 +74,16 @@ export const router = createBrowserRouter([
         element: <UserProfile/>
       },
       {
+        path: 'payment',
+        element: <Payment/>
+      },
+      {
         path: 'allusers',
         element:<AdminRoutes> <AllUsers/></AdminRoutes>
       },
       {
         path: 'managebookings',
-        element: <ManageBookings/>
+        element: <AdminRoutes><ManageBookings/></AdminRoutes>
       },
       {
         path: 'additem',
@@ -85,7 +92,14 @@ export const router = createBrowserRouter([
       {
         path: 'manageItem',
         element: <AdminRoutes><ManageItems/></AdminRoutes>
-      }
+      },
+    
+      {
+        path: 'update/:id',
+        element: <AdminRoutes><UpdateItem/></AdminRoutes>,
+        loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
+        // loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
+      },
 
     ]
   }

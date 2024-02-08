@@ -3,21 +3,37 @@ import { FaBars, FaHome, FaShoppingCart } from "react-icons/fa";
 import { FaWallet } from "react-icons/fa6";
 import { CiForkAndKnife } from "react-icons/ci";
 import { FcConferenceCall, FcDataSheet, FcList, FcPlanner } from "react-icons/fc";
-import { BiSolidContact, BiSolidShoppingBags } from "react-icons/bi";
-import { NavLink, Outlet } from "react-router-dom";
+import { BiSolidContact, BiSolidShoppingBags, BiTennisBall } from "react-icons/bi";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useAdmin from "../hooks/useAdmin";
+import Swal from 'sweetalert2'
 import Mode from "./DarkMode/Mode";
+import { useContext } from "react";
+import { AuthContext } from "../Provider/AuthProvider/AuthProvider";
 
 
 const Dashboard = () => {
   const [cart] = useCart();
-
+  const {user,logOut} = useContext(AuthContext)
+  const navigate = useNavigate()
   //todo
   //const isAdmin = false;
   const [isAdmin] = useAdmin();
 
-
+const handleLogout = () => {
+  logOut()
+  .then(() => {
+    Swal.fire({
+      position: "top-end",
+      icon: "success",
+      title: "logged out",
+      showConfirmButton: false,
+      timer: 1500
+    });
+    navigate('/')
+  })
+}
 
   return (
     <div className="drawer lg:drawer-open bg-transparent ">
@@ -124,6 +140,7 @@ const Dashboard = () => {
               <BiSolidContact></BiSolidContact>Contact
             </NavLink>
           </li>
+          <li>{user && <button onClick={handleLogout}>logout</button>}</li>
          <span className="bg-blue-600 w-20 p-1 rounded-full mx-auto "> <Mode/></span>
         </ul>
        

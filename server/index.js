@@ -113,12 +113,59 @@ async function run() {
 
     app.delete("/menu/:id", verifyJwt, verifyAdmin, async (req, res) => {
       const id = req.params.id;
-      
-      const filter = { _id: id };
-      //const query = { _id: new ObjectId(id) };
-      const result = await menuCollection.deleteOne(filter, query);
+
+      //const filter = { _id: id };
+      const query = { _id: new ObjectId(id) };
+      const result = await menuCollection.deleteOne(query);
       res.send(result);
     });
+
+    app.get('/menu/:id', async (req,res) => {
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await menuCollection.findOne(query)
+      res.send(result)
+    })
+    app.patch("/menu/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const item = req.body;
+      const updatedDoc = {
+        $set: {
+          name: item.name,
+          category: item.category,
+          price: item.price,
+          recipe: item.recipe,
+          image: item.image,
+        },
+      };
+
+      const result = await menuCollection.updateOne(filter, updatedDoc, options);
+      res.send(result);
+    });
+
+    // app.patch("/menu/:id", async (req, res) => {
+    //   const item = req.body;
+    //   const id = req.params.id;
+    //   console.log(id, "has been updated");
+    //   const filter = { _id: new ObjectId(id) };
+    //   //const options = { upsert: true };
+
+    //   const updatedItem = {
+    //     $set: {
+    //       name: item.name,
+    //       image: item.image,
+
+    //       recipe: item.recipe,
+
+    //       category: item.category,
+    //       price: item.price,
+    //     },
+    //   };
+    //   const result = await menuCollection.updateOne(filter, updatedItem);
+    //   res.send(result);
+    // });
 
     app.get("/reviews", async (req, res) => {
       const query = await reviewCollection.find().toArray();

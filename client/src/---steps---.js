@@ -6,3 +6,4 @@
 //npm i react-typical
 //https://jwt.io/
 //https://axios-http.com/docs/intro
+//https://stripe.com/docs/stripe-js/react
