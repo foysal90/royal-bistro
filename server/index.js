@@ -1,10 +1,12 @@
 const express = require("express");
 const cors = require("cors");
 const { MongoClient, ObjectId } = require("mongodb");
+
 const app = express();
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { verifyJwt } = require("./jwt");
+const { payment } = require("./payment");
 const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
@@ -203,6 +205,9 @@ async function run() {
       const result = await cartCollection.deleteOne(query);
       res.send(result);
     });
+
+    //payment
+    payment
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
