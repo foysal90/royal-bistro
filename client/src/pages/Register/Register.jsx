@@ -82,14 +82,14 @@ const Register = () => {
         
         <title>TOH | Register</title>
       </Helmet>
-      <div className="hero min-h-screen bg-white text-indigo-500">
+      <div className="hero w-full bg-white text-indigo-500">
         <div className="hero-content flex-col lg:flex-row-reverse">
           <div className="text-center lg:text-right">
             <img src={gif} alt="" />
           </div>
-          <div className="card shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
+          <div className="card shrink-0 w-full max-w-lg  shadow-2xl shadow-purple-100 bg-base-100">
             <div className="text-center">
-              <h1 className="text-3xl font-bold">Please Register!</h1>
+              <h1 className="text-3xl font-bold ">Please Register!</h1>
             </div>
             <form onSubmit={handleSubmit(onSubmit)} className="card-body">
               <div className="form-control">
@@ -186,12 +186,12 @@ const Register = () => {
                 )}
               </div>
 
-              <select {...register("gender")}>
+              {/* <select {...register("gender")}>
                 <option>Select Gender</option>
                 <option value="female">female</option>
                 <option value="male">male</option>
                 <option value="other">other</option>
-              </select>
+              </select> */}
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Register</button>
               </div>

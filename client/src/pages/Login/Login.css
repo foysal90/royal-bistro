@@ -2,13 +2,13 @@
   background-image: url("../../assets/others/authentication.png");
 }
 
-.login-bg {
+/* .login-bg {
   background-image: url("../../assets/others/background.jpg");
   
   background-repeat: no-repeat;
   background-size: cover;
   width: 120%;
-}
+} */
 
 .container {
     display: flex;

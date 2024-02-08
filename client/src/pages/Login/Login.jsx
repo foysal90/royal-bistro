@@ -1,6 +1,6 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import gif from "../../assets/others/authentication-unscreen.gif";
-//import cover from '../../assets/others/authentication.gif'
+//import gif from "../../assets/others/authentication-unscreen.gif";
+import cover from '../../assets/others/authentication.gif'
 import 'animate.css';
 import Swal from "sweetalert2";
 import "./Login.css";
@@ -82,17 +82,17 @@ const Login = () => {
           id=""
         >
           <div className="hero-content flex-col lg:flex-row">
-            {/* <div className="text-center lg:text-right h-full w-full">
+            <div className="text-center lg:text-right h-full w-full">
             
             <img src={cover} alt="" className='opacity-55' />
-          </div> */}
+          </div>
             <div
               className="card shrink-0 w-full md:max-w-md md:mx-20   shadow-2xl bg-base-100  "
               id="login"
             >
-              <div className="text-center ">
-                <h1 className="text-3xl font-bold">Login now!</h1>
-                <img className="h-40 w-48 mx-auto" src={gif} alt="" />
+              <div className="text-center mt-10 ">
+                <h1 className="text-3xl   font-bold">Please Login!</h1>
+                {/* <img className="h-40 w-48 mx-auto" src={gif} alt="" /> */}
               </div>
               <form onSubmit={handleLogin} className="card-body">
                 <div className="form-control">
