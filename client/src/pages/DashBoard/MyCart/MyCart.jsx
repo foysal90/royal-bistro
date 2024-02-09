@@ -75,7 +75,7 @@ const MyCart = () => {
       </Helmet>
       <div className="flex justify-evenly items-center h-[60px]">
         <h2 className="text-2xl">Total Items: {cart.length}</h2>
-        <h2 className="text-2xl">Sub-Total: $ {total}</h2>
+        <h2 className="text-2xl">Sub-Total: $ {total.toFixed(2)}</h2>
         <Link to='/dashboard/payment'><button className="btn bg-[#d1a054] hover:bg-[#d7a354] btn-sm text-base-200 w-24">
           Pay
         </button></Link>
