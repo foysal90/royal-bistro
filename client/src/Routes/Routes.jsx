@@ -20,6 +20,7 @@ import ManageItems from "../pages/DashBoard/ManageItems/ManageItems";
 //import EditItem from "../pages/DashBoard/EditItem/EditItem";
 import UpdateItem from "../pages/DashBoard/UpdateItem/UpdateItem";
 import Payment from "../pages/DashBoard/Payment/Payment";
+import OrderConfirmForm from "../pages/DashBoard/OrderConfirmForm/OrderConfirmForm";
 
 
 
@@ -76,6 +77,10 @@ export const router = createBrowserRouter([
       {
         path: 'payment',
         element: <Payment/>
+      },
+      {
+        path: 'orderConfirm',
+        element: <OrderConfirmForm/>
       },
       {
         path: 'allusers',

@@ -11,19 +11,19 @@ const Payment = () => {
   
   //const price = total.toFixed(2);
   return (
-    <div>
+    <div className="">
       <Helmet>
         <title>Toh | Payment</title>
       </Helmet>
       <SectionTitle heading={"payment"} subHeading={"Pay Here"}></SectionTitle>
-      <h1 className="text-center text-2xl font-semibold text-teal-300 mb-20">
-        Please enter your card details below
-      </h1>
+      
 
-      <Elements stripe={stripePromise}>
+      <div className="w-96 m-auto">
+      <Elements  stripe={stripePromise}>
         {/* props must like server */}
-        <CheckMeOut  />
+        <CheckMeOut />
       </Elements>
+      </div>
     </div>
   );
 };
