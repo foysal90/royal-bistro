@@ -21,6 +21,8 @@ import ManageItems from "../pages/DashBoard/ManageItems/ManageItems";
 import UpdateItem from "../pages/DashBoard/UpdateItem/UpdateItem";
 import Payment from "../pages/DashBoard/Payment/Payment";
 import OrderConfirmForm from "../pages/DashBoard/OrderConfirmForm/OrderConfirmForm";
+import AdminHome from "../pages/DashBoard/AdminHome/AdminHome";
+import UserHome from "../pages/DashBoard/UserHome/UserHome";
 
 
 
@@ -75,12 +77,21 @@ export const router = createBrowserRouter([
         element: <UserProfile/>
       },
       {
+        path: 'userhome',
+        element: <UserHome/>
+      },
+      {
         path: 'payment',
         element: <Payment/>
       },
       {
         path: 'orderConfirm',
         element: <OrderConfirmForm/>
+      },
+      //admin routes
+      {
+        path: 'adminhome',
+        element: <AdminRoutes><AdminHome/></AdminRoutes>
       },
       {
         path: 'allusers',

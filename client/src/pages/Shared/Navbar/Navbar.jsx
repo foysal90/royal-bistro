@@ -9,10 +9,13 @@ import Swal from "sweetalert2";
 import { FcBusinessman, FcExport } from "react-icons/fc";
 import { FaCartPlus } from "react-icons/fa";
 import useCart from "../../../hooks/useCart";
+import useAdmin from "../../../hooks/useAdmin";
+import GreetingMessage from "../../../components/GreetingMessage/GreetingMessage";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
-  const [cart] = useCart()
+  const [cart] = useCart();
+  const [isAdmin] = useAdmin();
 
   const handleLoggedOut = () => {
     logOut().then(() => {
@@ -54,11 +57,20 @@ const Navbar = () => {
         <Link to="/order/salad">order Food</Link>
       </li>
       <li>
-        <NavLink to="/dashboard">Dashboard</NavLink>
+        <NavLink to={isAdmin? '/dashboard/adminhome' : '/dashboard/userhome'}>Dahboard</NavLink>
       </li>
+      {/* {isAdmin ? (
+        <li>
+          <NavLink to="/dashboard/adminhome">Dashboard</NavLink>
+        </li>
+      ) : (
+        <li>
+          <NavLink to="/dashboard/userhome">Dashboard</NavLink>
+        </li> */}
+      {/* )} */}
       <li>
-        <Link to='/dashboard/mycart' className="">
-        <FaCartPlus className="w-6 h-6" />
+        <Link to="/dashboard/mycart" className="">
+          <FaCartPlus className="w-6 h-6" />
           <div className="badge badge-secondary">{cart?.length || 0}</div>
         </Link>
       </li>
@@ -66,7 +78,7 @@ const Navbar = () => {
       <li>
         {user ? (
           <div className="-mt-3">
-            <p>Welcome, {user.displayName}</p>
+            <p><GreetingMessage/>, {user.displayName}  </p>
             <div className="dropdown dropdown-end">
               <div
                 tabIndex={0}

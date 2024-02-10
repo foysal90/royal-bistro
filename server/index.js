@@ -252,16 +252,18 @@ async function run() {
       });
     });
 
-    app.post('/payment', verifyJwt, async(req,res) => {
+    app.post("/payment", verifyJwt, async (req, res) => {
       const payment = req.body;
-      console.log('payment', payment)
+      console.log("payment", payment);
       const insertedItems = await paymentCollection.insertOne(payment);
 
       //delete items from cart
-      const query = {_id: {$in: payment.cartItemsId.map(id => new ObjectId(id))}};
-      const deletedItems = await cartCollection.deleteMany(query)
-      res.send({result:insertedItems, result:deletedItems});
-    })
+      const query = {
+        _id: { $in: payment.cartItemsId.map((id) => new ObjectId(id)) },
+      };
+      const deletedItems = await cartCollection.deleteMany(query);
+      res.send({ result: insertedItems, result: deletedItems });
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
