@@ -272,7 +272,8 @@ async function run() {
       const totalOrders = await paymentCollection.estimatedDocumentCount();
 
       const payments = await paymentCollection.find().toArray();
-      const revenue = payments.reduce((sum, payment) => sum + payment.totalPrice, 0);
+      const revenue = parseFloat(payments.reduce((sum, payment) => sum + payment.totalPrice, 0).toFixed(2));
+
 
       res.send({
         revenue,
