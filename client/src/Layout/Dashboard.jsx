@@ -60,7 +60,7 @@ const handleLogout = () => {
           {isAdmin ? 
             <>
               <li>
-                <NavLink to="/">
+                <NavLink to="/dashboard/adminhome">
                   <FaHome></FaHome>Admin Home
                 </NavLink>
               </li>
@@ -88,7 +88,7 @@ const handleLogout = () => {
            : 
             <>
               <li>
-                <NavLink to="/">
+                <NavLink to="/dashboard/userhome">
                   <FaHome></FaHome>User Home
                 </NavLink>
               </li>
