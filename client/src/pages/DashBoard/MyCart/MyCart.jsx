@@ -22,7 +22,7 @@ const MyCart = () => {
       confirmButtonText: `Yes, delete it !!`,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/carts/${row._id}`, {
+        fetch(`https://royal-bistro-server.vercel.app/carts/${row._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -34,20 +34,20 @@ const MyCart = () => {
               Swal.fire({
                 position: "top-end",
                 title: `${row.name} will delete in <b></b> milliseconds.`,
-                
+
                 timer: 2000,
                 timerProgressBar: true,
                 didOpen: () => {
-                    Swal.showLoading();
-                    const timer = Swal.getPopup().querySelector("b");
-                    timerInterval = setInterval(() => {
-                      timer.textContent = `${Swal.getTimerLeft()}`;
-                    }, 100);
-                  },
-                  willClose: () => {
-                    clearInterval(timerInterval);
-                  },
-                
+                  Swal.showLoading();
+                  const timer = Swal.getPopup().querySelector("b");
+                  timerInterval = setInterval(() => {
+                    timer.textContent = `${Swal.getTimerLeft()}`;
+                  }, 100);
+                },
+                willClose: () => {
+                  clearInterval(timerInterval);
+                },
+
                 showClass: {
                   popup: `
                     animate__animated
@@ -76,9 +76,11 @@ const MyCart = () => {
       <div className="flex justify-evenly items-center h-[60px]">
         <h2 className="text-2xl">Total Items: {cart.length}</h2>
         <h2 className="text-2xl">Sub-Total: $ {total.toFixed(2)}</h2>
-        <Link to='/dashboard/payment'><button className="btn bg-[#d1a054] hover:bg-[#d7a354] btn-sm text-base-200 w-24">
-          Pay
-        </button></Link>
+        <Link to="/dashboard/payment">
+          <button className="btn bg-[#d1a054] hover:bg-[#d7a354] btn-sm text-base-200 w-24">
+            Pay
+          </button>
+        </Link>
       </div>
 
       {/* displaying items */}

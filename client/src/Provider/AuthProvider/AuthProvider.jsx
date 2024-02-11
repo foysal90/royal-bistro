@@ -58,7 +58,9 @@ const AuthProvider = ({ children }) => {
       //set n get token
       if (currentUser) {
         axios
-          .post("http://localhost:5000/jwt", { email: currentUser.email })
+          .post("https://royal-bistro-server.vercel.app/jwt", {
+            email: currentUser.email,
+          })
           .then((data) => {
             console.log(data.data.token);
             localStorage.setItem("Toh-access-token", data.data.token);
@@ -68,7 +70,6 @@ const AuthProvider = ({ children }) => {
         localStorage.removeItem("Toh-access-token");
         // console.log(localStorage.removeItem('Toh-access-token'))
       }
-     
     });
     return () => {
       return unsubscribe();

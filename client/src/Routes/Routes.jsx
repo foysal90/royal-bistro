@@ -24,13 +24,11 @@ import OrderConfirmForm from "../pages/DashBoard/OrderConfirmForm/OrderConfirmFo
 import AdminHome from "../pages/DashBoard/AdminHome/AdminHome";
 import UserHome from "../pages/DashBoard/UserHome/UserHome";
 
-
-
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <Main />,
-    errorElement: <ErrorElement/>,
+    errorElement: <ErrorElement />,
     children: [
       {
         path: "/",
@@ -42,81 +40,118 @@ export const router = createBrowserRouter([
       },
       {
         path: "/login",
-        element: <Login/>
+        element: <Login />,
       },
       {
         path: "/register",
-        element: <Register/>
+        element: <Register />,
       },
-  
+
       {
         path: "/cart",
-        element: <ProtectedRoutes><Cart/></ProtectedRoutes>
+        element: (
+          <ProtectedRoutes>
+            <Cart />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "/profile",
-        element: <ProtectedRoutes><Profile/></ProtectedRoutes>
+        element: (
+          <ProtectedRoutes>
+            <Profile />
+          </ProtectedRoutes>
+        ),
       },
       {
         path: "/order/:category",
-        element:<OrderFood />,
+        element: <OrderFood />,
       },
     ],
   },
   {
-    path: '/dashboard',
-    element: <ProtectedRoutes><Dashboard/></ProtectedRoutes>,
+    path: "/dashboard",
+    element: (
+      <ProtectedRoutes>
+        <Dashboard />
+      </ProtectedRoutes>
+    ),
     // errorElement: <ErrorElement/>,
     children: [
       {
-        path: 'mycart',
-        element: <MyCart/>
+        path: "mycart",
+        element: <MyCart />,
       },
       {
-        path: 'myprofile',
-        element: <UserProfile/>
+        path: "myprofile",
+        element: <UserProfile />,
       },
       {
-        path: 'userhome',
-        element: <UserHome/>
+        path: "userhome",
+        element: <UserHome />,
       },
       {
-        path: 'payment',
-        element: <Payment/>
+        path: "payment",
+        element: <Payment />,
       },
       {
-        path: 'orderConfirm',
-        element: <OrderConfirmForm/>
+        path: "orderConfirm",
+        element: <OrderConfirmForm />,
       },
       //admin routes
       {
-        path: 'adminhome',
-        element: <AdminRoutes><AdminHome/></AdminRoutes>
+        path: "adminhome",
+        element: (
+          <AdminRoutes>
+            <AdminHome />
+          </AdminRoutes>
+        ),
       },
       {
-        path: 'allusers',
-        element:<AdminRoutes> <AllUsers/></AdminRoutes>
+        path: "allusers",
+        element: (
+          <AdminRoutes>
+            {" "}
+            <AllUsers />
+          </AdminRoutes>
+        ),
       },
       {
-        path: 'managebookings',
-        element: <AdminRoutes><ManageBookings/></AdminRoutes>
+        path: "managebookings",
+        element: (
+          <AdminRoutes>
+            <ManageBookings />
+          </AdminRoutes>
+        ),
       },
       {
-        path: 'additem',
-        element: <AdminRoutes><AddItem/></AdminRoutes>
+        path: "additem",
+        element: (
+          <AdminRoutes>
+            <AddItem />
+          </AdminRoutes>
+        ),
       },
       {
-        path: 'manageItem',
-        element: <AdminRoutes><ManageItems/></AdminRoutes>
-      },
-    
-      {
-        path: 'update/:id',
-        element: <AdminRoutes><UpdateItem/></AdminRoutes>,
-        loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
-        // loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
+        path: "manageItem",
+        element: (
+          <AdminRoutes>
+            <ManageItems />
+          </AdminRoutes>
+        ),
       },
 
-    ]
-  }
+      {
+        path: "update/:id",
+        element: (
+          <AdminRoutes>
+            <UpdateItem />
+          </AdminRoutes>
+        ),
+        loader: ({ params }) =>
+          fetch(`https://royal-bistro-server.vercel.app/menu/${params.id}`),
+        // loader: ({params}) => fetch(`https://royal-bistro-server.vercel.app/menu/${params.id}`)
+      },
+    ],
+  },
 ]);

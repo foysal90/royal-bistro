@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import gif from "../../assets/others/authentication.gif";
-import 'animate.css';
+import "animate.css";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import { useContext } from "react";
@@ -8,78 +8,69 @@ import { AuthContext } from "../../Provider/AuthProvider/AuthProvider";
 import Swal from "sweetalert2";
 import SocialLogin from "../Shared/SocialLogin/SocialLogin";
 const Register = () => {
-  const {register, handleSubmit, formState: { errors },} = useForm();
-  const {createUser, updateUserprofile, logOut} = useContext(AuthContext)
-  const navigate = useNavigate()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+  const { createUser, updateUserprofile, logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
   const onSubmit = (data) => {
-    
-    
     const email = data.email;
     const password = data.password;
     createUser(email, password)
-    .then(result => {
-      const newUser = result.user;
-      console.log(newUser)
-      updateUserprofile(data.name, data.photoURL)
-     .then(() => {
-      const saveUser = {name:data.name, email: data.email, photo: data.photoURL}
-      fetch('http://localhost:5000/users', {
-        method: 'POST',
-        headers: {
-          'content-type' : 'application/json'
-        },
-        body : JSON.stringify(saveUser)
-      })
-      .then(res => res.json())
-      .then(data => {
-        console.log(data)
-       
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "user created successfully",
-            showConfirmButton: false,
-            timer: 1500
-          });
-          logOut()
+      .then((result) => {
+        const newUser = result.user;
+        console.log(newUser);
+        updateUserprofile(data.name, data.photoURL)
           .then(() => {
-            navigate('/login')
-    
+            const saveUser = {
+              name: data.name,
+              email: data.email,
+              photo: data.photoURL,
+            };
+            fetch("https://royal-bistro-server.vercel.app/users", {
+              method: "POST",
+              headers: {
+                "content-type": "application/json",
+              },
+              body: JSON.stringify(saveUser),
+            })
+              .then((res) => res.json())
+              .then((data) => {
+                console.log(data);
+
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "user created successfully",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                logOut().then(() => {
+                  navigate("/login");
+                });
+              });
           })
-         
-        
-          
-        
+          .catch((error) => {
+            Swal.fire({
+              icon: "error",
+              title: "Oops...",
+              text: error.message,
+            });
+          });
       })
-    
-     
-     
-
-     })
-     .catch(error => {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error.message,
-       
+      .catch((error) => {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: error.message,
+        });
       });
-     })
-
-    })
-    .catch(error => {
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: error.message,
-       
-      });
-    })
-   
   };
   return (
     <>
-     <Helmet>
-        
+      <Helmet>
         <title>TOH | Register</title>
       </Helmet>
       <div className="hero w-full bg-white text-indigo-500">
@@ -195,8 +186,10 @@ const Register = () => {
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Register</button>
               </div>
-              <SocialLogin/>
-              <Link to="/login"> <span>Alredy have an Account? </span>
+              <SocialLogin />
+              <Link to="/login">
+                {" "}
+                <span>Alredy have an Account? </span>
                 <input type="submit" value="Login" />
               </Link>
             </form>
