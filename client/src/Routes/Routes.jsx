@@ -23,6 +23,7 @@ import Payment from "../pages/DashBoard/Payment/Payment";
 import OrderConfirmForm from "../pages/DashBoard/OrderConfirmForm/OrderConfirmForm";
 import AdminHome from "../pages/DashBoard/AdminHome/AdminHome";
 import UserHome from "../pages/DashBoard/UserHome/UserHome";
+import PaymentHistory from "../pages/DashBoard/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -93,6 +94,10 @@ export const router = createBrowserRouter([
       {
         path: "payment",
         element: <Payment />,
+      },
+      {
+        path: "paymentHistory",
+        element: <PaymentHistory />,
       },
       {
         path: "orderConfirm",

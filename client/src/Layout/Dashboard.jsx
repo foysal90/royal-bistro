@@ -3,7 +3,7 @@ import { FaBars, FaHome, FaShoppingCart } from "react-icons/fa";
 import { FaWallet } from "react-icons/fa6";
 import { CiForkAndKnife } from "react-icons/ci";
 import { FcConferenceCall, FcDataSheet, FcList, FcPlanner } from "react-icons/fc";
-import { BiSolidContact, BiSolidShoppingBags, BiTennisBall } from "react-icons/bi";
+import { BiSolidContact, BiSolidShoppingBags } from "react-icons/bi";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import useCart from "../hooks/useCart";
 import useAdmin from "../hooks/useAdmin";
@@ -103,7 +103,7 @@ const handleLogout = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/history">
+                <NavLink to="/dashboard/paymentHistory">
                   <FaWallet></FaWallet>Payment History
                 </NavLink>
               </li>

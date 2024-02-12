@@ -41,7 +41,7 @@ const CheckMeOut = () => {
     if (card == null) {
       return;
     }
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });

@@ -70,18 +70,33 @@ async function run() {
     });
 
     //security layer verifyJwt
+    // app.get("/users/admin/:email", verifyJwt, async (req, res) => {
+    //   const email = req.params.email;
+    //   //checking if the correct user email token or not
+    //   const userEmailToken = req.decoded.email;
+    //   if (userEmailToken !== email) {
+    //     res.send({ admin: false });
+    //   }
+    //   const query = { email: email };
+    //   const user = await userCollection.findOne(query);
+    //   //checking if the user is admin or not
+    //   const adminRole = { admin: user?.role === "admin" };
+    //   res.send(adminRole);
+    // });
     app.get("/users/admin/:email", verifyJwt, async (req, res) => {
       const email = req.params.email;
-      //checking if the correct user email token or not
-      const userEmailToken = req.decoded.email;
-      if (userEmailToken !== email) {
-        res.send({ admin: false });
+
+      if (email !== req.decoded.email) {
+        return res.status(403).send({ message: "forbidden access" });
       }
+
       const query = { email: email };
       const user = await userCollection.findOne(query);
-      //checking if the user is admin or not
-      const adminRole = { admin: user?.role === "admin" };
-      res.send(adminRole);
+      let admin = false;
+      if (user) {
+        admin = user?.role === "admin";
+      }
+      res.send({ admin });
     });
 
     app.patch("/users/admin/:id", async (req, res) => {
@@ -239,7 +254,7 @@ async function run() {
     // payment intent
     app.post("/create-payment-intent", verifyJwt, async (req, res) => {
       const { price } = req.body;
-      const amount = price * 100;
+      const amount = parseInt(price * 100);
 
       const paymentIntent = await stripe.paymentIntents.create({
         amount: amount,
@@ -251,8 +266,36 @@ async function run() {
         clientSecret: paymentIntent.client_secret,
       });
     });
+    app.get("/payment/:email", verifyJwt, async (req, res) => {
+      const userEmail = req.params.email;
+      const decodedEmail = req.decoded.email;
+    
+      // Security check
+      if (userEmail !== decodedEmail) {
+        return res.status(403).send({ message: "Forbidden access" });
+      }
+    
+      try {
+        const query = { email: userEmail };
+        const result = await paymentCollection.find(query).toArray();
+        res.send(result);
+      } catch (error) {
+        console.error(error);
+        res.status(500).send({ message: "An error occurred while fetching payment history" });
+      }
+    });
+    // app.get("/payments/:email", async (req, res) => {
+    //   const query = req.query.email;
+    //   const result = await paymentCollection.findOne(query);
+    //   res.send(result);
+    // });
 
-    app.post("/payment", verifyJwt, async (req, res) => {
+    app.get("/payments", async (req, res) => {
+      const result = await paymentCollection.find().toArray();
+      res.send(result);
+    });
+
+    app.post("/payments", verifyJwt, async (req, res) => {
       const payment = req.body;
       console.log("payment", payment);
       const insertedItems = await paymentCollection.insertOne(payment);
@@ -268,19 +311,74 @@ async function run() {
     //admin stats
     app.get("/admin-stats", verifyJwt, verifyAdmin, async (req, res) => {
       const totalUsers = await userCollection.estimatedDocumentCount();
-      const totalProducts = await menuCollection.estimatedDocumentCount();
+      const menuItems = await menuCollection.estimatedDocumentCount();
       const totalOrders = await paymentCollection.estimatedDocumentCount();
 
-      const payments = await paymentCollection.find().toArray();
-      const revenue = parseFloat(payments.reduce((sum, payment) => sum + payment.totalPrice, 0).toFixed(2));
-
+      // const payments = await paymentCollection.find().toArray();
+      // const revenue = parseFloat(
+      //   payments
+      //     .reduce((sum, payment) => sum + payment.totalPrice, 0)
+      //     .toFixed(2)
+      // );
+      const payments = await paymentCollection
+        .aggregate([
+          {
+            $group: {
+              _id: null,
+              totalRevenue: {
+                $sum: "$totalPrice",
+              },
+            },
+          },
+        ])
+        .toArray();
+      const revenue = payments.length > 0 ? payments[0].totalRevenue : 0;
 
       res.send({
         revenue,
         totalUsers,
-        totalProducts,
+        menuItems,
         totalOrders,
       });
+    });
+
+    //order stats
+    app.get("/order-stats", verifyJwt, verifyAdmin, async (req, res) => {
+      const result = await paymentCollection
+        .aggregate([
+          {
+            $unwind: "$menuItemId",
+          },
+          {
+            $lookup: {
+              from: "products",
+              localField: "menuItemId",
+              foreignField: "_id",
+              as: "menuItems",
+            },
+          },
+          {
+            $unwind: "$menuItems",
+          },
+          {
+            $group: {
+              _id: "$menuItems.category",
+              quantity: { $sum: 1 },
+              revenue: { $sum: "$menuItems.price" },
+            },
+          },
+          {
+            $project: {
+              _id: 0,
+              category: "$_id",
+              quantity: "$quantity",
+              revenue: "$revenue",
+            },
+          },
+        ])
+        .toArray();
+
+      res.send(result);
     });
 
     // Send a ping to confirm a successful connection
