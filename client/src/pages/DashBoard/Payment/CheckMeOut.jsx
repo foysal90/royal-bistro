@@ -85,7 +85,7 @@ const CheckMeOut = () => {
         status: "processing",
         itemNames: cart.map((item) => item.name),
       };
-      axiosSecure.post("/payment", payment).then((res) => {
+      axiosSecure.post("/payments", payment).then((res) => {
         console.log(res.data);
         if (res.data.result) {
           refetch();

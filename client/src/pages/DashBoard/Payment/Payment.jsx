@@ -8,7 +8,6 @@ import CheckMeOut from "./CheckMeOut";
 
 const stripePromise = loadStripe(import.meta.env.VITE_Payment_Gateway_PK);
 const Payment = () => {
-  
   //const price = total.toFixed(2);
   return (
     <div className="">
@@ -16,13 +15,12 @@ const Payment = () => {
         <title>Toh | Payment</title>
       </Helmet>
       <SectionTitle heading={"payment"} subHeading={"Pay Here"}></SectionTitle>
-      
 
       <div className="w-96 m-auto">
-      <Elements  stripe={stripePromise}>
-        {/* props must like server */}
-        <CheckMeOut />
-      </Elements>
+        <Elements stripe={stripePromise}>
+          {/* props must like server */}
+          <CheckMeOut />
+        </Elements>
       </div>
     </div>
   );

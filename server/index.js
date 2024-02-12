@@ -290,10 +290,10 @@ async function run() {
     //   res.send(result);
     // });
 
-    app.get("/payments", async (req, res) => {
+    app.get("/payments",verifyJwt, async (req, res) => {
       const result = await paymentCollection.find().toArray();
       res.send(result);
-    });
+    })
 
     app.post("/payments", verifyJwt, async (req, res) => {
       const payment = req.body;
