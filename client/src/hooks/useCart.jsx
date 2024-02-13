@@ -6,7 +6,7 @@ const useCart = () => {
 
   //const token = localStorage.getItem('Toh-access-token')
   const [axiosSecure] = useAxiosSecure();
-  const { refetch, data: cart = [] } = useQuery({
+  const { refetch, data: cart = []} = useQuery({
     queryKey: ["carts", user?.email],
     enabled: !loading,
     queryFn: async () => {
@@ -24,6 +24,6 @@ const useCart = () => {
     //   return res.json();
     // },
   });
-  return [cart, refetch];
+  return [cart,refetch];
 };
 export default useCart;

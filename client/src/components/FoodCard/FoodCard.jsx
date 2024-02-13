@@ -15,6 +15,7 @@ const FoodCard = ({ item }) => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
@@ -41,10 +42,11 @@ const FoodCard = ({ item }) => {
         .then((data) => {
           if (data.insertedId) {
             refetch();
+            reset();
             Swal.fire({
               position: "top-end",
               icon: "success",
-              title: `${name} has been added to cart with quantity ${data.qty}`,
+              title: `${name} has been added to cart with quantity ${qty}`,
               showConfirmButton: false,
               timer: 1500,
             });
