@@ -24,6 +24,7 @@ import OrderConfirmForm from "../pages/DashBoard/OrderConfirmForm/OrderConfirmFo
 import AdminHome from "../pages/DashBoard/AdminHome/AdminHome";
 import UserHome from "../pages/DashBoard/UserHome/UserHome";
 import PaymentHistory from "../pages/DashBoard/PaymentHistory/PaymentHistory";
+import Reservation from "../pages/DashBoard/Reservation/Reservation";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +40,7 @@ export const router = createBrowserRouter([
         path: "/menu",
         element: <Menu />,
       },
+
       {
         path: "/login",
         element: <Login />,
@@ -100,6 +102,10 @@ export const router = createBrowserRouter([
         element: <PaymentHistory />,
       },
       {
+        path: "reservation",
+        element: <Reservation />,
+      },
+      {
         path: "orderConfirm",
         element: <OrderConfirmForm />,
       },
@@ -154,8 +160,8 @@ export const router = createBrowserRouter([
           </AdminRoutes>
         ),
         loader: ({ params }) =>
-          fetch(`https://royal-bistro-server.vercel.app/menu/${params.id}`),
-        // loader: ({params}) => fetch(`https://royal-bistro-server.vercel.app/menu/${params.id}`)
+          fetch(`http://localhost:5000/menu/${params.id}`),
+        // loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
       },
     ],
   },

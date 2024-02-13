@@ -30,7 +30,7 @@ const Register = () => {
               email: data.email,
               photo: data.photoURL,
             };
-            fetch("https://royal-bistro-server.vercel.app/users", {
+            fetch("http://localhost:5000/users", {
               method: "POST",
               headers: {
                 "content-type": "application/json",
@@ -189,7 +189,6 @@ const Register = () => {
               </div>
               <SocialLogin />
               <Link to="/login">
-                {" "}
                 <span>Alredy have an Account? </span>
                 <input type="submit" value="Login" />
               </Link>

@@ -22,7 +22,7 @@ const MyCart = () => {
       confirmButtonText: `Yes, delete it !!`,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`https://royal-bistro-server.vercel.app/carts/${row._id}`, {
+        fetch(`http://localhost:5000/carts/${row._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -89,7 +89,7 @@ const MyCart = () => {
           {/* head */}
           <thead className="bg-[#d1a054] text-base-200">
             <tr>
-              <td>#</td>
+              <td>qty</td>
 
               <th>image</th>
               <th>Name</th>

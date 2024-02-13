@@ -98,7 +98,7 @@ const handleLogout = () => {
                 </NavLink>
               </li>
               <li>
-                <NavLink to="/reservation">
+                <NavLink to="/dashboard/reservation">
                 <FcPlanner />Reservations
                 </NavLink>
               </li>

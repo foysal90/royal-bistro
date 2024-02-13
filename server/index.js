@@ -27,6 +27,7 @@ async function run() {
     const reviewCollection = client.db("authenticFood").collection("reviews");
     const cartCollection = client.db("authenticFood").collection("carts");
     const paymentCollection = client.db("authenticFood").collection("payments");
+    const bookingCollection = client.db("authenticFood").collection("bookings");
 
     //jwt
     app.post("/jwt", async (req, res) => {
@@ -235,6 +236,14 @@ async function run() {
       res.send(result);
     });
 
+    //reservation
+    app.post("/reservation",verifyJwt, async (req, res) => {
+      const reserved = req.body;
+      console.log(reserved);
+      const result = await bookingCollection.insertOne(reserved);
+      res.send(result);
+    });
+
     //payment
     //  app.post('/create-payment-intent',  async(req,res) => {
     //   const {price} = req.body;
@@ -269,31 +278,30 @@ async function run() {
     app.get("/payment/:email", verifyJwt, async (req, res) => {
       const userEmail = req.params.email;
       const decodedEmail = req.decoded.email;
-    
+
       // Security check
       if (userEmail !== decodedEmail) {
         return res.status(403).send({ message: "Forbidden access" });
       }
-    
+
       try {
         const query = { email: userEmail };
         const result = await paymentCollection.find(query).toArray();
         res.send(result);
       } catch (error) {
         console.error(error);
-        res.status(500).send({ message: "An error occurred while fetching payment history" });
+        res
+          .status(500)
+          .send({
+            message: "An error occurred while fetching payment history",
+          });
       }
     });
-    // app.get("/payments/:email", async (req, res) => {
-    //   const query = req.query.email;
-    //   const result = await paymentCollection.findOne(query);
-    //   res.send(result);
-    // });
 
-    app.get("/payments",verifyJwt, async (req, res) => {
+    app.get("/payments", verifyJwt, async (req, res) => {
       const result = await paymentCollection.find().toArray();
       res.send(result);
-    })
+    });
 
     app.post("/payments", verifyJwt, async (req, res) => {
       const payment = req.body;
