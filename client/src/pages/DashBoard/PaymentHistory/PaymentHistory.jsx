@@ -1,4 +1,5 @@
 //import { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 import GreetingMessage from "../../../components/GreetingMessage/GreetingMessage";
 import useAuth from "../../../hooks/useAuth";
 import useAxiosSecure from "../../../hooks/useAxiosSecure";
@@ -15,44 +16,62 @@ const PaymentHistory = () => {
   } = useQuery({
     queryKey: ["payments", user.email],
     queryFn: async () => {
-      const response = await axiosSecure.get(`/payment/${user.email}`); // Ensure the endpoint matches your server route
+      const response = await axiosSecure.get(`/payment/${user.email}`);
       return response.data;
     },
   });
 
-  if (isLoading) return <div><progress className="progress w-56 bg-yellow-600"></progress></div>;
+  if (isLoading)
+    return (
+      <div>
+        <progress className="progress w-56 bg-yellow-600"></progress>
+      </div>
+    );
   if (error) return <div>An error occurred: {error.message}</div>;
 
   return (
     <div className="m-2">
-        <h1 className="text-2xl text-cyan-200 font-extrabold "> <GreetingMessage/>,  {user?.displayName}</h1>
-    <h2 className="text-2xl ">Total Payments: {payments.length}</h2>
-    <div className="overflow-x-auto">
+      <Helmet><title>Royal | PaymentHistory</title></Helmet>
+      <h1 className="text-2xl text-cyan-200 font-extrabold ">
+        <GreetingMessage />, {user?.displayName}
+      </h1>
+      <h2 className="text-2xl">Total Payments: {payments.length}</h2>
+      <div className="overflow-x-auto">
         <table className="table table-zebra">
-            {/* head */}
-            <thead className="text-lime-400">
-                <tr>
-                    <th>qty</th>
-                    <th>price</th>
-                    <th>Transaction Id</th>
-                    <th>Status</th>
-                    <th>Email</th>
+          <thead className="text-lime-400">
+            <tr>
+              <th>Item</th>
+              <th>Qty</th>
+              <th>Price</th>
+              <th>Transaction Id</th>
+              <th>Status</th>
+              <th>Email</th>
+            </tr>
+          </thead>
+          <tbody>
+            {payments.map((payment) => {
+              // Ensure qty is an array and has values; otherwise, default to [0]
+              const qtyArray = Array.isArray(payment.qty) ? payment.qty : [0];
+              const totalQty = qtyArray.reduce(
+                (acc, currentQty) => acc + currentQty,
+                0
+              );
+
+              return (
+                <tr key={payment._id}>
+                  <td>{payment.item}</td>
+                  <td>{totalQty}</td> {/* Display the total quantity */}
+                  <td>${parseFloat(payment.totalPrice).toFixed(2)}</td>
+                  <td>{payment.transactionId}</td>
+                  <td>{payment.status}</td>
+                  <td>{payment.email}</td>
                 </tr>
-            </thead>
-            <tbody>
-                {payments.map((payment) => <tr key={payment._id}>
-                    {/* <th>{index + 1}</th> */}
-                    <td>{payment.quantity}</td>
-                    <td>${parseFloat(payment.totalPrice).toFixed(2)}</td>
-                    <td>{payment.transactionId}</td>
-                    <td>{payment.status}</td>
-                    <td>{payment.email}</td>
-                </tr>)}
-                
-            </tbody>
+              );
+            })}
+          </tbody>
         </table>
+      </div>
     </div>
-</div>
   );
 };
 

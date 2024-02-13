@@ -30,7 +30,7 @@ const Register = () => {
               email: data.email,
               photo: data.photoURL,
             };
-            fetch("http://localhost:5000/users", {
+            fetch("https://royal-bistro-server.vercel.app/users", {
               method: "POST",
               headers: {
                 "content-type": "application/json",
@@ -72,7 +72,7 @@ const Register = () => {
   return (
     <>
       <Helmet>
-        <title>TOH | Register</title>
+        <title>Royal | Register</title>
       </Helmet>
       <div className="hero w-full bg-white text-indigo-500">
         <div className="hero-content flex-col lg:flex-row-reverse">

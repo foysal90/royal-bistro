@@ -12,7 +12,7 @@ const Payment = () => {
   return (
     <div className="">
       <Helmet>
-        <title>Toh | Payment</title>
+        <title>Royal | Payment</title>
       </Helmet>
       <SectionTitle heading={"payment"} subHeading={"Pay Here"}></SectionTitle>
 

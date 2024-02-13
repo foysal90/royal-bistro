@@ -1,10 +1,15 @@
 import { Link, useLocation, useNavigate } from "react-router-dom";
 //import gif from "../../assets/others/authentication-unscreen.gif";
-import cover from '../../assets/others/authentication.gif'
-import 'animate.css';
+import cover from "../../assets/others/authentication.gif";
+import "animate.css";
+import Typical from "react-typical";
 import Swal from "sweetalert2";
 import "./Login.css";
-import {loadCaptchaEnginge,LoadCanvasTemplate,validateCaptcha,} from "react-simple-captcha";
+import {
+  loadCaptchaEnginge,
+  LoadCanvasTemplate,
+  validateCaptcha,
+} from "react-simple-captcha";
 import { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Provider/AuthProvider/AuthProvider";
@@ -14,8 +19,8 @@ const Login = () => {
   const [disabled, setDisabled] = useState(true);
   const navigate = useNavigate();
   const { login } = useContext(AuthContext);
- const location = useLocation()
- const from = location.state?.from?.pathname || '/';
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
   useEffect(() => {
     loadCaptchaEnginge(6);
   }, []);
@@ -60,21 +65,20 @@ const Login = () => {
           `,
           },
         });
-        navigate(from, {replace: true});
+        navigate(from, { replace: true });
       })
-      .catch((error) =>{
+      .catch((error) => {
         Swal.fire({
           icon: "error",
           title: "Oops...",
           text: `${error.message}`,
-        
         });
-      })
+      });
   };
   return (
     <>
       <Helmet>
-        <title>TOH | Login</title>
+        <title>ROYAL| Login</title>
       </Helmet>
       <div className="container">
         <div
@@ -83,15 +87,20 @@ const Login = () => {
         >
           <div className="hero-content flex-col lg:flex-row">
             <div className="text-center lg:text-right h-full w-full">
-            
-            <img src={cover} alt="" className='opacity-55' />
-          </div>
+              <img src={cover} alt="" className="opacity-55" />
+            </div>
             <div
               className="card shrink-0 w-full md:max-w-md md:mx-20   shadow-2xl bg-base-100  "
               id="login"
             >
               <div className="text-center mt-10 ">
-                <h1 className="text-3xl   font-bold">Please Login!</h1>
+                <h1 className="text-3xl   font-bold">
+                  <Typical
+                    steps={["Please Login!", 2500, "", 1000]}
+                    loop={Infinity}
+                    wrapper="p"
+                  />
+                </h1>
                 {/* <img className="h-40 w-48 mx-auto" src={gif} alt="" /> */}
               </div>
               <form onSubmit={handleLogin} className="card-body">
@@ -143,7 +152,7 @@ const Login = () => {
                     Login
                   </button>
                 </div>
-                <SocialLogin/>
+                <SocialLogin />
                 <Link to="/register">
                   <span className="text-yellow-600">
                     Don't Have an account?

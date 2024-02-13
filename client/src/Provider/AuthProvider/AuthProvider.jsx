@@ -58,7 +58,7 @@ const AuthProvider = ({ children }) => {
       //set n get token
       if (currentUser) {
         axios
-          .post("http://localhost:5000/jwt", {
+          .post("https://royal-bistro-server.vercel.app/jwt", {
             email: currentUser.email,
           })
           .then((data) => {

@@ -23,7 +23,7 @@ const MyCart = () => {
       confirmButtonText: `Yes, delete it!`,
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/carts/${row._id}`, {
+        fetch(`https://royal-bistro-server.vercel.app/carts/${row._id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
@@ -33,7 +33,7 @@ const MyCart = () => {
               Swal.fire({
                 position: "top-end",
                 title: `${row.name} has been deleted.`,
-                icon: 'success',
+                icon: "success",
                 timer: 1500,
               });
             }
@@ -44,7 +44,7 @@ const MyCart = () => {
   return (
     <div className="w-[700px]">
       <Helmet>
-        <title>TOH | My Cart</title>
+        <title>Royal | My Cart</title>
       </Helmet>
       <div className="flex justify-evenly items-center h-[60px]">
         <h2 className="text-2xl">Total Items: {cart.length}</h2>

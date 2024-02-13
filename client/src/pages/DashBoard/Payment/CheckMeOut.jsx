@@ -18,7 +18,9 @@ const CheckMeOut = () => {
   const navigate = useNavigate();
   //const [transactionId, setTransactionId] = useState('');
 
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  // const total = cart.reduce((sum, item) => sum + item.price, 0);
+  // const totalPrice = parseFloat(total.toFixed(2));
+  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
   const totalPrice = parseFloat(total.toFixed(2));
 
   useEffect(() => {
@@ -73,13 +75,27 @@ const CheckMeOut = () => {
     if (paymentIntent.status === "succeeded") {
       //setTransactionId(paymentIntent.id)
       //save payment info to the server
+      // const payment = {
+      //   email: user?.email,
+      //   name: user?.displayName,
+      //   transactionId: paymentIntent.id,
+      //   totalPrice,
+      //   date: new Date(),
+      //   item: cart.length,
+      //   qty: cart.map((item) => item.qty),
+      //   cartItemsId: cart.map((item) => item._id),
+      //   menuItemId: cart.map((item) => item.menuItem),
+      //   status: "processing",
+      //   itemNames: cart.map((item) => item.name),
+      // };
       const payment = {
         email: user?.email,
         name: user?.displayName,
         transactionId: paymentIntent.id,
         totalPrice,
         date: new Date(),
-        quantity: cart.length,
+        item: cart.length, // Consider renaming this to 'itemCount' for clarity
+        qty: cart.map((item) => item.qty),
         cartItemsId: cart.map((item) => item._id),
         menuItemId: cart.map((item) => item.menuItem),
         status: "processing",
@@ -96,9 +112,8 @@ const CheckMeOut = () => {
             text: `Transaction complete, Transaction Id: ${paymentIntent.id}`,
             showConfirmButton: false,
             timer: 1500,
-           
           });
-          navigate('/dashboard/orderConfirm')
+          navigate("/dashboard/orderConfirm");
         }
       });
     }
