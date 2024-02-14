@@ -31,7 +31,7 @@ const FoodCard = ({ item }) => {
         email: user.email,
         qty, // Use the 'qty' field from the form
       };
-      fetch("https://royal-bistro-server.vercel.app/carts", {
+      fetch("http://localhost:5000/carts", {
         method: "POST",
         headers: {
           "content-type": "application/json",

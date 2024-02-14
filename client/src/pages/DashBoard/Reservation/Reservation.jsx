@@ -38,8 +38,8 @@ const Reservation = () => {
       date: data.date,
       message: data.message,
     };
-    console.log(formattedData);
-    const bookingInfo = await axiosSecure.post("/reservation", formattedData);
+    //console.log(formattedData);
+    const bookingInfo = await axiosSecure.post("/reservations", formattedData);
     console.log(bookingInfo.data, "reservation ");
     if (bookingInfo.data.insertedId) {
         // show success popup
@@ -94,9 +94,12 @@ const Reservation = () => {
                 <option value="1 Person">1 Person</option>
                 <option value="2 People">2 People</option>
                 <option value="3 People">3 People</option>
-                <option value="4 People<">4 People</option>
+                <option value="4 People">4 People</option>
                 <option value="5 People">5 People</option>
                 <option value="6 People">6 People</option>
+                <option value="7 People">7 People</option>
+                <option value="8 People">8 People</option>
+                <option value="9 People">9 People</option>
               </select>
             </label>
             {errors.guest && errors.guest.type === "required" && (

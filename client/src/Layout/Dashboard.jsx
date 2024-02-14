@@ -103,6 +103,11 @@ const handleLogout = () => {
                 </NavLink>
               </li>
               <li>
+                <NavLink to="/dashboard/myBookings">
+                <FcPlanner />MyBookings
+                </NavLink>
+              </li>
+              <li>
                 <NavLink to="/dashboard/paymentHistory">
                   <FaWallet></FaWallet>Payment History
                 </NavLink>

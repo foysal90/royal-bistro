@@ -237,7 +237,29 @@ async function run() {
     });
 
     //reservation
-    app.post("/reservation",verifyJwt, async (req, res) => {
+    app.delete("/reservations/:id", verifyJwt, async (req, res) => {
+      const id = req.params.id;
+      //console.log(id,'deleted');
+
+      const query = { _id: new ObjectId(id) };
+
+      const result = await bookingCollection.deleteOne(query);
+      res.send(result);
+    });
+    app.get("/reservations/:email", verifyJwt, async (req, res) => {
+      const email = req.params.email;
+      const decodedEmail = req.decoded.email;
+      if (email !== decodedEmail) {
+        return res
+          .status(401)
+          .send({ error: true, message: "unauthorized access" });
+      }
+      const query = { email: email };
+      //console.log(email);
+      const result = await bookingCollection.find(query).toArray();
+      res.send(result);
+    });
+    app.post("/reservations", verifyJwt, async (req, res) => {
       const reserved = req.body;
       console.log(reserved);
       const result = await bookingCollection.insertOne(reserved);
@@ -245,6 +267,31 @@ async function run() {
     });
 
     //payment
+    // app.post("/create-payment-intent", verifyJwt, async (req, res) => {
+    //   const { price, qty } = req.body;
+
+    //   // Ensure price and qty are numbers and calculate the total amount
+    //   // Stripe expects amount to be in the smallest currency unit (e.g., cents for USD)
+    //   const amount = parseInt(price) * 100 * parseInt(qty);
+
+    //   try {
+    //     const paymentIntent = await stripe.paymentIntents.create({
+    //       amount: amount, // total amount in cents
+    //       currency: "usd",
+    //       payment_method_types: ["card"],
+    //     });
+
+    //     res.send({
+    //       clientSecret: paymentIntent.client_secret,
+    //     });
+    //   } catch (error) {
+    //     res.status(400).send({
+    //       error: {
+    //         message: error.message,
+    //       },
+    //     });
+    //   }
+    // });
     //  app.post('/create-payment-intent',  async(req,res) => {
     //   const {price} = req.body;
     //   const amount = price * 100;
@@ -260,13 +307,14 @@ async function run() {
 
     //  })
 
-    // payment intent
+    //payment intent
     app.post("/create-payment-intent", verifyJwt, async (req, res) => {
-      const { price } = req.body;
+      const { price, qty } = req.body;
       const amount = parseInt(price * 100);
 
       const paymentIntent = await stripe.paymentIntents.create({
         amount: amount,
+        qty: qty,
         currency: "usd",
         payment_method_types: ["card"],
       });
@@ -290,11 +338,9 @@ async function run() {
         res.send(result);
       } catch (error) {
         console.error(error);
-        res
-          .status(500)
-          .send({
-            message: "An error occurred while fetching payment history",
-          });
+        res.status(500).send({
+          message: "An error occurred while fetching payment history",
+        });
       }
     });
 
