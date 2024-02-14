@@ -165,8 +165,8 @@ export const router = createBrowserRouter([
           </AdminRoutes>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:5000/menu/${params.id}`),
-        // loader: ({params}) => fetch(`http://localhost:5000/menu/${params.id}`)
+          fetch(`https://royal-bistro-server.vercel.app/menu/${params.id}`),
+        // loader: ({params}) => fetch(`https://royal-bistro-server.vercel.app/menu/${params.id}`)
       },
     ],
   },
