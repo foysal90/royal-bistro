@@ -1,7 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from "../../../assets/tastehome.png";
-//import Mode from "../../../Layout/DarkMode/Mode";
-//import Theme from "../Theme/Theme";
+
 import Mode from "../../../Layout/DarkMode/Mode";
 import { useContext } from "react";
 import { AuthContext } from "../../../Provider/AuthProvider/AuthProvider";
@@ -10,7 +9,7 @@ import { FcBusinessman, FcExport } from "react-icons/fc";
 import { FaCartPlus } from "react-icons/fa";
 import useCart from "../../../hooks/useCart";
 import useAdmin from "../../../hooks/useAdmin";
-import GreetingMessage from "../../../components/GreetingMessage/GreetingMessage";
+//import GreetingMessage from "../../../components/GreetingMessage/GreetingMessage";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext);
@@ -38,6 +37,7 @@ const Navbar = () => {
       });
     });
   };
+
   const navItems = (
     <>
       <li>
@@ -56,9 +56,11 @@ const Navbar = () => {
       <li>
         <Link to="/order/salad">order Food</Link>
       </li>
-      
+
       <li>
-        <NavLink to={isAdmin? '/dashboard/adminhome' : '/dashboard/userhome'}>Dahboard</NavLink>
+        <NavLink to={isAdmin ? "/dashboard/adminhome" : "/dashboard/userhome"}>
+          Dahboard
+        </NavLink>
       </li>
       {/* {isAdmin ? (
         <li>
@@ -75,57 +77,12 @@ const Navbar = () => {
           <div className="badge badge-secondary">{cart?.length || 0}</div>
         </Link>
       </li>
-
-      <li>
-        {user ? (
-          <div className="-mt-3">
-            <p><GreetingMessage/>, {user.displayName}  </p>
-            <div className="dropdown dropdown-end">
-              <div
-                tabIndex={0}
-                role="button"
-                className="btn  btn-circle avatar"
-              >
-                <div className="w-10 rounded-full">
-                  <img className="w-8 h-8" src={user.photoURL} alt="loading" />
-                </div>
-              </div>
-              <ul
-                tabIndex={0}
-                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content  bg-blue-950 text-white rounded-box w-52"
-              >
-                <li>
-                  <Link to="/profile" className="justify-between">
-                    <div className="flex gap-1">
-                      <FcBusinessman className="w-4 h-4" />
-                      <span>Profile</span>
-                    </div>
-                  </Link>
-                </li>
-                <li>
-                  <p>
-                    <Mode />
-                  </p>
-                </li>
-                <li>
-                  <div className="flex gap-1">
-                    <FcExport className="w-6 h-6" />
-                    <button onClick={handleLoggedOut}>Logout</button>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </div>
-        ) : (
-          <NavLink to="/login">Login</NavLink>
-        )}
-      </li>
     </>
   );
 
   return (
     <div className="navbar fixed -top-5 z-10 md:opacity-70 sm:opacity-80 max-w-screen-xl bg-black h-20 my-5 text-white ">
-      <div className="navbar-start">
+      <div className="navbar-center">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
             <svg
@@ -150,9 +107,15 @@ const Navbar = () => {
             {navItems}
           </ul>
         </div>
-        <Link to="/">
-          <img className="w-40 h-28 " src={logo} alt="TASTE-OF-HOME" />
-        </Link>
+        <div className="navbar-center ml-20">
+          <Link to="/">
+            <img
+              className="lg:w-36 lg:h-24 sm:w-20 h-20 "
+              src={logo}
+              alt="TASTE-OF-HOME"
+            />
+          </Link>
+        </div>
       </div>
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{navItems}</ul>
@@ -160,9 +123,56 @@ const Navbar = () => {
 
       {/* <Search/> */}
 
-      <div className="navbar-end">
-        {/* <Theme/> */}
-        {/* <Mode /> */}
+      <div className="navbar-end mr-5">
+        <>
+          {user ? (
+            <div className="">
+              {/* <p><GreetingMessage/>, {user.displayName}  </p> */}
+              <div className="dropdown dropdown-end">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn  btn-circle avatar"
+                >
+                  <div className="w-10 rounded-full">
+                    <img
+                      className="w-8 h-8"
+                      src={user.photoURL
+                      }
+                      alt="loading"
+                    />
+                  </div>
+                </div>
+                <ul
+                  tabIndex={0}
+                  className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content  bg-blue-950 text-white rounded-box w-52"
+                >
+                  <li>
+                    <Link to="/profile" className="justify-between">
+                      <div className="flex gap-1">
+                        <FcBusinessman className="w-4 h-4" />
+                        <span>Profile</span>
+                      </div>
+                    </Link>
+                  </li>
+                  <li>
+                    <p>
+                      <Mode />
+                    </p>
+                  </li>
+                  <li>
+                    <div className="flex gap-1">
+                      <FcExport className="w-6 h-6" />
+                      <button onClick={handleLoggedOut}>Logout</button>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          ) : (
+            <NavLink to="/login">Login</NavLink>
+          )}
+        </>
       </div>
     </div>
   );
