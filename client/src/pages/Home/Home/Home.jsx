@@ -13,7 +13,9 @@ const Home = () => {
         <title>TOH | Home</title>
       </Helmet>
 
+      <div className="mt-20">
       <Banner />
+      </div>
 
       <Category />
       <PopularMenu />
