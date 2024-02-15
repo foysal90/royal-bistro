@@ -9,6 +9,7 @@ import { FcBusinessman, FcExport } from "react-icons/fc";
 import { FaCartPlus } from "react-icons/fa";
 import useCart from "../../../hooks/useCart";
 import useAdmin from "../../../hooks/useAdmin";
+import { FaCircleUser } from "react-icons/fa6";
 //import GreetingMessage from "../../../components/GreetingMessage/GreetingMessage";
 
 const Navbar = () => {
@@ -170,7 +171,39 @@ const Navbar = () => {
               </div>
             </div>
           ) : (
-            <NavLink to="/login">Login</NavLink>
+            <div className="">
+            {/* <p><GreetingMessage/>, {user.displayName}  </p> */}
+            <div className="dropdown dropdown-end">
+              <div
+                tabIndex={0}
+                role="button"
+                className="btn  btn-circle avatar border-emerald-400"
+              >
+                <FaCircleUser className="w-12 h-12 " />
+              </div>
+              <ul
+                tabIndex={0}
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content  bg-blue-950 text-white rounded-box w-52"
+              >
+                <li>
+                  <Link to="/profile" className="justify-between">
+                  <div className="flex gap-1">
+                    <FcExport className="w-6 h-6" />
+                     <NavLink to="/login">Login</NavLink>
+                  </div>
+                  </Link>
+                </li>
+                
+                <li>
+                  <div className="flex gap-1">
+                    <FcExport className="w-6 h-6" />
+                     <NavLink to="/register">Register</NavLink>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+            // <NavLink to="/login">Login</NavLink>
           )}
         </>
       </div>
