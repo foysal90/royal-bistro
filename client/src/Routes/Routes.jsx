@@ -26,6 +26,7 @@ import UserHome from "../pages/DashBoard/UserHome/UserHome";
 import PaymentHistory from "../pages/DashBoard/PaymentHistory/PaymentHistory";
 import Reservation from "../pages/DashBoard/Reservation/Reservation";
 import MyBookings from "../pages/DashBoard/MyBookings/MyBookings";
+import AboutUs from "../pages/AboutUs/AboutUs";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +41,10 @@ export const router = createBrowserRouter([
       {
         path: "/menu",
         element: <Menu />,
+      },
+      {
+        path: "/about",
+        element:<AboutUs/>
       },
 
       {

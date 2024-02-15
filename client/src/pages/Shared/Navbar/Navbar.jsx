@@ -82,8 +82,10 @@ const Navbar = () => {
   );
 
   return (
-    <div className="navbar fixed -top-5 z-10 md:opacity-90 sm:opacity-80 max-w-screen-xl 
-    bg-[#005288] h-20 my-5 text-[#e6e6e6] ">
+    <div
+      className="navbar fixed -top-5 z-10 md:opacity-90 sm:opacity-80 max-w-screen-xl 
+    bg-[#005288] h-20 my-5 text-[#e6e6e6] "
+    >
       <div className="navbar-center">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
