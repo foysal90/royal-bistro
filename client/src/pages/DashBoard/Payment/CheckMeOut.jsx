@@ -133,7 +133,11 @@ const CheckMeOut = () => {
             type="submit"
             disabled={!stripe || !clientSecret || processing}
           >
-            Pay Now
+            {processing ? (
+              <span className="text-white">processing</span>
+            ) : (
+              "Pay Now"
+            )}
           </button>
         </form>
       </div>
