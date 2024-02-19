@@ -12,7 +12,7 @@ const PopularMenu = () => {
   return (
     <section>
       <SectionTitle subHeading={"Popular Items"} heading={"from our menu"} />
-      <div className="grid md:grid-cols-2 gap-5 my-5">
+      <div className="grid md:grid-cols-2 gap-5 my-5 ">
         {popular.map((item) => (
           <MenuItem key={item._id} item={item} />
         ))}

@@ -130,20 +130,6 @@ const Register = () => {
                   )}
                 </div>
 
-                {/* Image Upload field */}
-                <div className="form-control">
-                  <label className="label">
-                    <span className="label-text">Upload Image</span>
-                  </label>
-                  <input
-                    type="file"
-                    onChange={(e) => uploadImage(e.target.files[0])}
-                    disabled={imageUploading}
-                    className="input input-bordered"
-                  />
-                  {imageUploading && <span>Uploading...</span>}
-                </div>
-
                 {/* Email field */}
                 <div className="form-control">
                   <label className="label">
@@ -174,6 +160,20 @@ const Register = () => {
                   {errors.password && (
                     <span className="text-red-500">Password is required</span>
                   )}
+                </div>
+                {/* Image Upload field */}
+                <div className="form-control">
+                  <label className="label">
+                    <span className="label-text">Profile Picture</span>
+                  </label>
+                  <input
+                    type="file"
+                    onChange={(e) => uploadImage(e.target.files[0])}
+                    disabled={imageUploading}
+                    className="input input-bordered"
+                    required
+                  />
+                  {imageUploading && <span>Uploading...</span>}
                 </div>
 
                 {/* Submit button */}
